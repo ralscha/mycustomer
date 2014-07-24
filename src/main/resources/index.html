@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>eds-starter-simple</title>
+	<style>
+		#appLoadingIndicator {
+            position: absolute;
+            top: 50%;
+            left: 50%;	
+            margin-top: -100px;
+            margin-left: -100px;
+            width: 200px;
+            height: 200px;
+		    text-align: center;    
+		}
+		#appLoadingIndicator span {
+		    display: inline-block;
+		    vertical-align: middle;
+		    width: 40px;
+		    height: 40px;
+		    margin: 50px auto;
+		    background: blue;
+		    border-radius: 50px;
+		    -webkit-animation: loader 0.9s infinite alternate;
+		    -moz-animation: loader 0.9s infinite alternate;
+		}
+		#appLoadingIndicator span:nth-of-type(2) {
+		    -webkit-animation-delay: 0.3s;
+		    -moz-animation-delay: 0.3s;
+		}
+		#appLoadingIndicator span:nth-of-type(3) {
+		    -webkit-animation-delay: 0.6s;
+		    -moz-animation-delay: 0.6s;
+		}
+		@-webkit-keyframes loader {
+		  0% {
+		    width: 40px;
+		    height: 40px;
+		    opacity: 0.9;
+		    -webkit-transform: translateY(0);
+		  }
+		  100% {
+		    width: 64px;
+		    height: 64px;
+		    opacity: 0.1;
+		    -webkit-transform: translateY(-61px);
+		  }
+		}
+		@-moz-keyframes loader {
+		  0% {
+		    width: 40px;
+		    height: 40px;
+		    opacity: 0.9;
+		    -moz-transform: translateY(0);
+		  }
+		  100% {
+		    width: 64px;
+		    height: 64px;
+		    opacity: 0.1;
+		    -moz-transform: translateY(-61px);
+		  }
+		}
+	</style>
+    application.app_css  
+</head>
+<body>
+  <div id="appLoadingIndicator">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>  
+  application.app_js
+</body>
+</html>

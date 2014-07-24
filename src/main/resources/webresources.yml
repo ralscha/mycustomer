@@ -1,0 +1,47 @@
+# dev = development profile
+# prod = production profile
+# script/link = script/link tag
+
+--- 
+  variable: app_js
+  resources:
+  - path: /resources/ext/{ext.version}/ext-all-debug.js
+    dev: script
+    prod: ignore
+    
+  - path: /resources/ext/{ext.version}/ext-all.js
+    dev: ignore
+    prod: script
+    
+  - path: /resources/ext/{ext.version}/sencha-charts.js
+    dev: script
+    prod: script
+  
+  - path: /resources/ext/{ext.version}/ext-theme-crisp/ext-theme-crisp.js
+    dev: script
+    prod: script
+  
+  - path: /api.js
+    dev: script
+    prod: ignore
+      
+  - path: /api-{application.version}.js
+    dev: ignore
+    prod: script
+      
+  - path: /app/
+    classpath: /static
+    dev: ignore
+    prod: concat_minify
+    
+  - path: /app.js
+    classpath: /static
+    dev: script
+    prod: concat_minify  
+
+---
+  variable: app_css
+  resources:
+  - path: /resources/ext/{ext.version}/ext-theme-crisp/ext-theme-crisp-all.css
+    dev: link
+    prod: link
