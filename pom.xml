@@ -20,9 +20,10 @@
 		<java.version>1.8</java.version>
 		<tomcat.version>8.0.9</tomcat.version>
 		<jackson.version>2.4.1</jackson.version>
-		<ext.version>5.0.1.1109-NIGHTLY</ext.version>
+		<ext.version>5.0.1.1226-NIGHTLY</ext.version>
 		<h2.version>1.4.180</h2.version>
-		<querydsl.version>3.4.1</querydsl.version>
+		<querydsl.version>3.4.2</querydsl.version>
+		<hibernate.version>4.3.6.Final</hibernate.version>
 		
 		<sencha.env>testing</sencha.env>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -174,7 +175,7 @@
 			<plugin>
 				<groupId>com.mysema.maven</groupId>
 				<artifactId>apt-maven-plugin</artifactId>
-				<version>1.1.1</version>
+				<version>1.1.2</version>
 				<executions>
 					<execution>
 						<goals>
@@ -241,7 +242,7 @@
 			<plugin>
 				<groupId>com.mysema.maven</groupId>
 				<artifactId>apt-maven-plugin</artifactId>
-				<version>1.1.1</version>
+				<version>1.1.2</version>
 				<executions>
 					<execution>
 						<id>modelgen</id>
