@@ -107,7 +107,6 @@ Ext.define('MyCustomer.view.customer.CustomerPanel', {
 	}, {
 		xtype: 'pagingtoolbar',
 		dock: 'bottom',
-		reference: 'pagingtoolbar',
 		bind: {
 			store: '{customers}'
 		}
