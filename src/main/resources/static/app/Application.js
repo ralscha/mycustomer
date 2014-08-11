@@ -1,6 +1,5 @@
 Ext.define('MyCustomer.Application', {
     extend: 'Ext.app.Application',
-    requires: ['Ext.window.Toast'],
     name: 'MyCustomer',
 
 	constructor: function() {

@@ -5,12 +5,12 @@ Ext.define('MyCustomer.view.customer.CustomerPanel', {
 
 	title: 'Customer',
 	bind: {
-		store: '{customers}'
+		store: '{customers}',
+		selection: '{selectedCustomer}'
 	},
 
 	listeners: {
-		itemclick: 'onItemClick',
-		scope: 'controller'
+		itemclick: 'onItemClick'
 	},
 
 	columns: [ {
@@ -62,7 +62,7 @@ Ext.define('MyCustomer.view.customer.CustomerPanel', {
 			text: 'Delete',
 			handler: 'deleteCustomer',
 			bind: {
-				disabled: '{!customerSelected}'
+				disabled: '{!selectedCustomer}'
 			}
 		}, '-', {
 			xtype: 'label',
@@ -75,9 +75,11 @@ Ext.define('MyCustomer.view.customer.CustomerPanel', {
 			labelWidth: 60,
 			displayField: 'name',
 			valueField: 'value',
-			reference: 'categoryCb',
+			editable: false,
+			value: 'All',
 			bind: {
-				store: '{categories}'
+			    store: '{categories}',
+				selection: '{selectedCategory}'
 			},
 			listeners: {
 				change: 'onCategoryChange'
@@ -86,11 +88,19 @@ Ext.define('MyCustomer.view.customer.CustomerPanel', {
 			fieldLabel: 'Name',
 			labelWidth: 40,
 			xtype: 'textfield',
-			reference: 'nameTf',
+			bind: '{nameFilter}',
 			listeners: {
 				change: {
 					fn: 'onNameChange',
 					buffer: 350
+				}
+			},
+			triggers: {
+				clear: {
+					cls: 'x-form-clear-trigger',
+					handler: function(tf) {
+						tf.setValue('');
+					}
 				}
 			}
 		} ]

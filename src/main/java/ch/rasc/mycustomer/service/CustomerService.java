@@ -6,12 +6,13 @@ import static ch.ralscha.extdirectspring.annotation.ExtDirectMethodType.STORE_RE
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -20,7 +21,7 @@ import ch.ralscha.extdirectspring.bean.ExtDirectStoreReadRequest;
 import ch.ralscha.extdirectspring.bean.ExtDirectStoreResult;
 import ch.ralscha.extdirectspring.filter.Filter;
 import ch.ralscha.extdirectspring.filter.StringFilter;
-import ch.rasc.edsutil.QueryUtil;
+import ch.rasc.edsutil.RepositoryUtil;
 import ch.rasc.mycustomer.entity.Category;
 import ch.rasc.mycustomer.entity.Customer;
 import ch.rasc.mycustomer.entity.QCustomer;
@@ -29,7 +30,6 @@ import ch.rasc.mycustomer.repository.CustomerRepository;
 import com.mysema.query.BooleanBuilder;
 import com.mysema.query.Tuple;
 import com.mysema.query.jpa.impl.JPAQuery;
-import com.mysema.query.types.OrderSpecifier;
 
 @Service
 public class CustomerService {
@@ -60,28 +60,18 @@ public class CustomerService {
 			category = ((StringFilter) categoryFilter).getValue();
 		}
 
-		List<Customer> customers = new ArrayList<>();
-
 		BooleanBuilder bb = new BooleanBuilder();
 		if (StringUtils.hasText(name)) {
 			bb.and(QCustomer.customer.firstName.startsWith(name).or(
 					QCustomer.customer.lastName.startsWith(name)));
 		}
-		if (StringUtils.hasText(category)) {
+		if (StringUtils.hasText(category) && !"All".equals(category)) {
 			bb.and(QCustomer.customer.category.eq(Category.valueOf(category)));
 		}
 
-		if (readRequest.getSorters().isEmpty()) {
-			customers = customerRepository.findAll(bb);
-		}
-		else {
-			@SuppressWarnings("rawtypes")
-			OrderSpecifier[] orderSpecifiers = QueryUtil.createOrderSpecifiers(
-					readRequest, Customer.class, QCustomer.customer,
-					Collections.emptyMap(), Collections.emptySet());
-			customers = customerRepository.findAll(bb, orderSpecifiers);
-		}
-		return new ExtDirectStoreResult<>(customers);
+		Pageable pageable = RepositoryUtil.createPageable(readRequest);
+		Page<Customer> page = customerRepository.findAll(bb, pageable);
+		return new ExtDirectStoreResult<>(page.getTotalElements(), page.getContent());
 
 	}
 

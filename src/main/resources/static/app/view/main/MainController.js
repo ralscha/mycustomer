@@ -1,6 +1,5 @@
 Ext.define('MyCustomer.view.main.MainController', {
 	extend: 'Ext.app.ViewController',
-	requires: [ 'Ext.MessageBox' ],
 
 	onStoreDataChanged: function(s) {
 		this.getViewModel().set('numberOfCustomers', s.getCount());
@@ -16,9 +15,10 @@ Ext.define('MyCustomer.view.main.MainController', {
 	},
 
 	applyFilters: function() {
+		var viewModel = this.getViewModel();
 		var myStore = this.getStore('customers');
-		var nameFilter = this.lookupReference('nameTf').getValue();
-		var categoryFilter = this.lookupReference('categoryCb').getValue();
+		var nameFilter = viewModel.get('nameFilter');
+		var categoryFilter = viewModel.get('selectedCategory');
 
 		var filters = [];
 
@@ -31,7 +31,7 @@ Ext.define('MyCustomer.view.main.MainController', {
 		if (categoryFilter) {
 			filters.push(new Ext.util.Filter({
 				property: 'category',
-				value: categoryFilter
+				value: categoryFilter.data.value
 			}));
 		}
 
@@ -87,7 +87,11 @@ Ext.define('MyCustomer.view.main.MainController', {
 				});
 
 			}
-			Ext.toast('Data Saved', 'Info', 't');
+			Ext.toast({
+			     html: 'Data successfully saved',
+			     title: 'Info',
+			     align: 't'
+			 });
 		}
 	},
 

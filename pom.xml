@@ -7,6 +7,10 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 
+	<prerequisites>
+		<maven>3.1.0</maven>
+	</prerequisites>
+
 	<name>MyCustomer</name>
 	<description>MyCustomer Demo Project</description>
 
@@ -24,8 +28,8 @@
 		<h2.version>1.4.181</h2.version>
 		<querydsl.version>3.4.2</querydsl.version>
 		<hibernate.version>4.3.6.Final</hibernate.version>
-		
-		<sencha.env>testing</sencha.env>
+		<hibernate-validator.version>5.1.2.Final</hibernate-validator.version>
+
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.debug>true</maven.compiler.debug>
 
@@ -37,6 +41,17 @@
 		<repository>
 			<id>rasc</id>
 			<url>http://repository.rasc.ch</url>
+		</repository>
+		<repository>
+			<id>sonatype</id>
+			<name>sonatype</name>
+			<url>https://oss.sonatype.org/content/groups/public</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
 		</repository>
 	</repositories>
 
@@ -76,13 +91,13 @@
 		<dependency>
 			<groupId>ch.ralscha</groupId>
 			<artifactId>extdirectspring</artifactId>
-			<version>1.4.2</version>
+			<version>1.4.3-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
 			<groupId>ch.rasc</groupId>
 			<artifactId>edsutil</artifactId>
-			<version>2.0.0</version>
+			<version>2.0.1</version>
 		</dependency>
 
 		<dependency>
@@ -173,42 +188,6 @@
 			</plugin>
 
 			<plugin>
-				<groupId>com.mysema.maven</groupId>
-				<artifactId>apt-maven-plugin</artifactId>
-				<version>1.1.2</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>process</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>target/generated-sources/java</outputDirectory>
-							<processor>com.mysema.query.apt.jpa.JPAAnnotationProcessor</processor>
-						</configuration>
-					</execution>
-				</executions>
-				<dependencies>
-					<dependency>
-						<groupId>com.mysema.querydsl</groupId>
-						<artifactId>querydsl-apt</artifactId>
-						<version>${querydsl.version}</version>
-					</dependency>
-				</dependencies>
-			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-clean-plugin</artifactId>
-				<configuration>
-					<filesets>
-						<fileset>
-							<directory>${basedir}/src/main/resources/static/build</directory>
-						</fileset>
-					</filesets>
-				</configuration>
-			</plugin>
-
-			<plugin>
 				<groupId>com.googlecode.jslint4java</groupId>
 				<artifactId>jslint4java-maven-plugin</artifactId>
 				<version>2.0.5</version>
@@ -232,7 +211,7 @@
 								<vars>true</vars>
 								<unparam>true</unparam>
 								<plusplus>true</plusplus>
-								<predef>Ext,formLoadService,formSubmitService,pollService,storeService,treeLoadService</predef>
+								<predef>Ext</predef>
 							</options>
 						</configuration>
 					</execution>
@@ -244,6 +223,16 @@
 				<artifactId>apt-maven-plugin</artifactId>
 				<version>1.1.2</version>
 				<executions>
+					<execution>
+					    <id>jpa</id>
+						<goals>
+							<goal>process</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>target/generated-sources/java</outputDirectory>
+							<processor>com.mysema.query.apt.jpa.JPAAnnotationProcessor</processor>
+						</configuration>
+					</execution>				
 					<execution>
 						<id>modelgen</id>
 						<goals>
@@ -267,6 +256,11 @@
 						<artifactId>extclassgenerator</artifactId>
 						<version>1.0.5</version>
 					</dependency>
+					<dependency>
+						<groupId>com.mysema.querydsl</groupId>
+						<artifactId>querydsl-apt</artifactId>
+						<version>${querydsl.version}</version>
+					</dependency>					
 				</dependencies>
 			</plugin>
 

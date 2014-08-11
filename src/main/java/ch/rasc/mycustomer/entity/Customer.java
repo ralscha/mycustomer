@@ -11,11 +11,11 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
+import ch.rasc.edsutil.jackson.ISO8601LocalDateDeserializer;
+import ch.rasc.edsutil.jackson.ISO8601LocalDateSerializer;
 import ch.rasc.extclassgenerator.Model;
 import ch.rasc.extclassgenerator.ModelField;
 import ch.rasc.extclassgenerator.ModelType;
-import ch.rasc.mycustomer.util.ISO8601LocalDateDeserializer;
-import ch.rasc.mycustomer.util.ISO8601LocalDateSerializer;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;

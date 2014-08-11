@@ -1,20 +1,16 @@
 Ext.define('MyCustomer.view.main.MainModel', {
 	extend: 'Ext.app.ViewModel',
 	requires: [ 'MyCustomer.model.Customer' ],
-	formulas: {
-		selectedCustomer: function(get) {
-			return get('customerGrid.selection');
-		},
-		customerSelected: function(get) {
-			return !!get('selectedCustomer');
-		}
+
+	data: {
+		selectedCustomer: false
 	},
 
 	stores: {
 		customers: {
-			// xclass: 'Ext.data.BufferedStore',
+			xclass: 'Ext.data.BufferedStore',
 			model: 'MyCustomer.model.Customer',
-			pageSize: 0,
+			pageSize: 100,
 			autoLoad: true,
 			remoteSort: true,
 			remoteFilter: true,
@@ -30,6 +26,9 @@ Ext.define('MyCustomer.view.main.MainModel', {
 		categories: {
 			fields: [ 'value', 'name' ],
 			data: [ {
+				value: 'All',
+				name: 'All'
+			}, {
 				value: 'A',
 				name: 'A'
 			}, {

@@ -6,10 +6,12 @@ import java.nio.charset.StandardCharsets;
 import javax.servlet.Filter;
 
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.embedded.ServletContextInitializer;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
+import org.springframework.boot.orm.jpa.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -18,26 +20,25 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.util.StreamUtils;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
+import ch.ralscha.extdirectspring.ExtDirectSpring;
+import ch.rasc.edsutil.entity.LocalDateConverter;
 import ch.rasc.edsutil.optimizer.WebResourceProcessor;
+import ch.rasc.mycustomer.entity.Customer;
 
 @Configuration
-@ComponentScan(basePackages = { "ch.ralscha.extdirectspring", "ch.rasc.mycustomer" })
+@ComponentScan(basePackageClasses = { ExtDirectSpring.class, Application.class })
 @EnableAutoConfiguration
+@EntityScan(basePackageClasses = { Customer.class, LocalDateConverter.class })
 public class Application extends SpringBootServletInitializer {
-
-	private static SpringApplicationBuilder configureApp(
-			SpringApplicationBuilder application) {
-		return application.sources(Application.class);
-	}
 
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-		return configureApp(application);
+		return application.sources(Application.class);
 	}
 
-	public static void main(String[] args) throws Exception {
+	public static void main(String... args) throws Exception {
 		// -Dspring.profiles.active=development
-		configureApp(new SpringApplicationBuilder()).run(args);
+		SpringApplication.run(Application.class, args);
 	}
 
 	@Bean
