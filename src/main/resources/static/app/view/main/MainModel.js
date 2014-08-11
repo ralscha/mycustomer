@@ -3,24 +3,24 @@ Ext.define('MyCustomer.view.main.MainModel', {
 	requires: [ 'MyCustomer.model.Customer' ],
 
 	data: {
-		selectedCustomer: false
+		selectedCustomer: null,
+		editCustomer: false
 	},
 
 	stores: {
 		customers: {
-			xclass: 'Ext.data.BufferedStore',
 			model: 'MyCustomer.model.Customer',
 			pageSize: 100,
 			autoLoad: true,
 			remoteSort: true,
 			remoteFilter: true,
-			autoSync: true,
+			autoSync: false,
 			sorters: [ {
 				property: 'lastName',
 				direction: 'ASC'
 			} ],
 			listeners: {
-				datachanged: 'onStoreDataChanged'
+				load: 'onStoreLoad'
 			}
 		},
 		categories: {
@@ -37,6 +37,14 @@ Ext.define('MyCustomer.view.main.MainModel', {
 			}, {
 				value: 'C',
 				name: 'C'
+			} ]
+		},
+		editCategories: {
+			source: '{categories}',
+			filters: [ {
+				property: 'value',
+				value: 'All',
+				operator: '!='
 			} ]
 		},
 		categoriesReport: {

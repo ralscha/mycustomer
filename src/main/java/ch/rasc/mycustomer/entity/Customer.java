@@ -6,9 +6,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import ch.rasc.edsutil.jackson.ISO8601LocalDateDeserializer;
@@ -32,18 +34,22 @@ public class Customer extends AbstractPersistable<Long> {
 	private static final long serialVersionUID = 1L;
 
 	@Length(min = 1, max = 255)
+	@NotEmpty
 	private String lastName;
 
 	@Length(min = 1, max = 255)
+	@NotEmpty
 	private String firstName;
 
 	@Enumerated(EnumType.STRING)
 	@Column(length = 1)
-	@ModelField(type = ModelType.STRING)
+	@ModelField(type = ModelType.STRING, allowNull = true)
+	@NotNull
 	private Sex sex;
 
 	@Email
 	@Length(min = 1, max = 200)
+	@NotEmpty
 	private String email;
 
 	@Column(length = 300)
@@ -57,10 +63,12 @@ public class Customer extends AbstractPersistable<Long> {
 
 	@Enumerated(EnumType.STRING)
 	@Column(length = 1)
-	@ModelField(type = ModelType.STRING)
+	@ModelField(type = ModelType.STRING, allowNull = true)
+	@NotNull
 	private Category category;
 
-	private boolean newsletter;
+	@NotNull
+	private Boolean newsletter;
 
 	@Column(length = 10)
 	@JsonSerialize(using = ISO8601LocalDateSerializer.class)
@@ -132,11 +140,11 @@ public class Customer extends AbstractPersistable<Long> {
 		this.category = category;
 	}
 
-	public boolean isNewsletter() {
+	public Boolean getNewsletter() {
 		return newsletter;
 	}
 
-	public void setNewsletter(boolean newsletter) {
+	public void setNewsletter(Boolean newsletter) {
 		this.newsletter = newsletter;
 	}
 

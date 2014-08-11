@@ -1,7 +1,7 @@
 Ext.define("MyCustomer.model.Customer",
 {
   extend : "Ext.data.Model",
-  requires : [ "Ext.data.identifier.Negative", "Ext.data.proxy.Direct", "Ext.data.validator.Email", "Ext.data.validator.Length" ],
+  requires : [ "Ext.data.identifier.Negative", "Ext.data.proxy.Direct", "Ext.data.validator.Email", "Ext.data.validator.Length", "Ext.data.validator.Presence" ],
   identifier : "negative",
   fields : [ {
     name : "lastName",
@@ -10,6 +10,8 @@ Ext.define("MyCustomer.model.Customer",
       type : "length",
       min : 1,
       max : 255
+    }, {
+      type : "presence"
     } ]
   }, {
     name : "firstName",
@@ -18,10 +20,16 @@ Ext.define("MyCustomer.model.Customer",
       type : "length",
       min : 1,
       max : 255
+    }, {
+      type : "presence"
     } ]
   }, {
     name : "sex",
-    type : "string"
+    type : "string",
+    allowNull : true,
+    validators : [ {
+      type : "presence"
+    } ]
   }, {
     name : "email",
     type : "string",
@@ -31,6 +39,8 @@ Ext.define("MyCustomer.model.Customer",
       type : "length",
       min : 1,
       max : 200
+    }, {
+      type : "presence"
     } ]
   }, {
     name : "address",
@@ -43,10 +53,17 @@ Ext.define("MyCustomer.model.Customer",
     type : "string"
   }, {
     name : "category",
-    type : "string"
+    type : "string",
+    allowNull : true,
+    validators : [ {
+      type : "presence"
+    } ]
   }, {
     name : "newsletter",
-    type : "boolean"
+    type : "boolean",
+    validators : [ {
+      type : "presence"
+    } ]
   }, {
     name : "dob",
     type : "date",

@@ -6,9 +6,14 @@ import static ch.ralscha.extdirectspring.annotation.ExtDirectMethodType.STORE_RE
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -38,11 +43,14 @@ public class CustomerService {
 
 	private final EntityManager entityManager;
 
+	private final Validator validator;
+
 	@Autowired
 	public CustomerService(CustomerRepository customerRepository,
-			EntityManager entityManager) {
+			EntityManager entityManager, Validator validator) {
 		this.customerRepository = customerRepository;
 		this.entityManager = entityManager;
+		this.validator = validator;
 	}
 
 	@ExtDirectMethod(STORE_READ)
@@ -76,18 +84,62 @@ public class CustomerService {
 	}
 
 	@ExtDirectMethod(STORE_MODIFY)
-	public ExtDirectStoreResult<Customer> create(Customer newCustomer) {
+	public ValidationErrorsResult<Customer> create(Customer newCustomer) {
 		System.out.println(newCustomer);
-		newCustomer.setId(null);
-		Customer insertedCustomer = customerRepository.save(newCustomer);
-		System.out.println("NEW CUSTOMER: " + insertedCustomer.getId());
-		return new ExtDirectStoreResult<>(insertedCustomer);
+
+		List<ValidationErrors> violations = validateEntity(newCustomer);
+		ValidationErrorsResult<Customer> result;
+		if (violations.isEmpty()) {
+			Customer insertedCustomer = customerRepository.save(newCustomer);
+			System.out.println("NEW CUSTOMER: " + insertedCustomer.getId());
+			result = new ValidationErrorsResult<>(insertedCustomer);
+		}
+		else {
+			result = new ValidationErrorsResult<>(newCustomer);
+			result.setValidations(violations);
+		}
+		return result;
+
 	}
 
 	@ExtDirectMethod(STORE_MODIFY)
-	public ExtDirectStoreResult<Customer> update(Customer updatedCustomer) {
-		Customer savedCustomer = customerRepository.save(updatedCustomer);
-		return new ExtDirectStoreResult<>(savedCustomer);
+	public ValidationErrorsResult<Customer> update(Customer updatedCustomer) {
+		List<ValidationErrors> violations = validateEntity(updatedCustomer);
+		ValidationErrorsResult<Customer> result;
+		if (violations.isEmpty()) {
+			Customer savedCustomer = customerRepository.save(updatedCustomer);
+			result = new ValidationErrorsResult<>(savedCustomer);
+		}
+		else {
+			result = new ValidationErrorsResult<>(updatedCustomer);
+			result.setValidations(violations);
+		}
+		return result;
+	}
+
+	protected <T> List<ValidationErrors> validateEntity(T entity) {
+		Set<ConstraintViolation<T>> constraintViolations = validator.validate(entity);
+		Map<String, List<String>> fieldMessages = new HashMap<>();
+		if (!constraintViolations.isEmpty()) {
+			for (ConstraintViolation<T> constraintViolation : constraintViolations) {
+				String property = constraintViolation.getPropertyPath().toString();
+				List<String> messages = fieldMessages.get(property);
+				if (messages == null) {
+					messages = new ArrayList<>();
+					fieldMessages.put(property, messages);
+				}
+				messages.add(constraintViolation.getMessage());
+			}
+		}
+		List<ValidationErrors> validationErrors = new ArrayList<>();
+		fieldMessages.forEach((k, v) -> {
+			ValidationErrors errors = new ValidationErrors();
+			errors.setField(k);
+			errors.setMessage(v.toArray(new String[v.size()]));
+			validationErrors.add(errors);
+		});
+
+		return validationErrors;
 	}
 
 	@ExtDirectMethod(STORE_MODIFY)

@@ -5,6 +5,10 @@ Ext.define('MyCustomer.view.customer.CustomerEdit', {
 	width: '100%',
 	reference: 'customeredit',
 
+	bind: {
+		disabled: '{!editCustomer}'
+	},
+
 	defaultType: 'textfield',
 	defaults: {
 		msgTarget: 'side'
@@ -13,12 +17,12 @@ Ext.define('MyCustomer.view.customer.CustomerEdit', {
 	items: [ {
 		fieldLabel: 'First Name',
 		name: 'firstName',
-		allowBlank: false,
+
 		anchor: '100%'
 	}, {
 		fieldLabel: 'Last Name',
 		name: 'lastName',
-		allowBlank: false,
+
 		anchor: '100%'
 	}, {
 		fieldLabel: 'E-Mail',
@@ -46,25 +50,22 @@ Ext.define('MyCustomer.view.customer.CustomerEdit', {
 		name: 'category',
 		displayField: 'name',
 		valueField: 'value',
+		queryMode: 'local',
 		bind: {
-			store: '{categories}'
+			store: '{editCategories}'
 		},
 		anchor: '50%'
 	}, {
-		xtype: 'fieldcontainer',
+		xtype: 'radiogroup',
 		fieldLabel: 'Sex',
-		defaultType: 'radiofield',
 		defaults: {
-			flex: 1
+			name: 'sex'
 		},
-		layout: 'hbox',
 		items: [ {
 			boxLabel: 'Male',
-			name: 'sex',
 			inputValue: 'M'
 		}, {
 			boxLabel: 'Female',
-			name: 'sex',
 			inputValue: 'F'
 		} ]
 

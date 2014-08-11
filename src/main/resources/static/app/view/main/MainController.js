@@ -1,9 +1,9 @@
 Ext.define('MyCustomer.view.main.MainController', {
 	extend: 'Ext.app.ViewController',
 
-	onStoreDataChanged: function(s) {
-		this.getViewModel().set('numberOfCustomers', s.getCount());
-		this.getStore('categories').load();
+	onStoreLoad: function(s) {
+		this.getViewModel().set('numberOfCustomers', s.getTotalCount());
+		this.getStore('categoriesReport').load();
 	},
 
 	onCategoryChange: function(cb, value) {
@@ -19,6 +19,9 @@ Ext.define('MyCustomer.view.main.MainController', {
 		var myStore = this.getStore('customers');
 		var nameFilter = viewModel.get('nameFilter');
 		var categoryFilter = viewModel.get('selectedCategory');
+
+		this.lookupReference('customeredit').reset();
+		this.getViewModel().set('editCustomer', false);
 
 		var filters = [];
 
@@ -45,7 +48,15 @@ Ext.define('MyCustomer.view.main.MainController', {
 	},
 
 	onItemClick: function(button, record) {
-		this.lookupReference('customeredit').loadRecord(record);
+		var selectedCustomer = this.getViewModel().get('selectedCustomer');
+		this.getViewModel().set('editCustomer', true);
+		this.lookupReference('customeredit').loadRecord(selectedCustomer);
+	},
+
+	newCustomer: function() {
+		var newCustomer = new MyCustomer.model.Customer();
+		this.getViewModel().set('editCustomer', true);
+		this.lookupReference('customeredit').loadRecord(newCustomer);
 	},
 
 	deleteCustomer: function() {
@@ -54,15 +65,17 @@ Ext.define('MyCustomer.view.main.MainController', {
 
 	onConfirm: function(choice) {
 		if (choice === 'yes') {
-			var sm = this.lookupReference('customerGrid').getSelectionModel();
-			var customer = sm.getSelection();
-			this.getStore('customers').remove(customer);
+			var selectedCustomer = this.getViewModel().get('selectedCustomer');
+			selectedCustomer.erase();
+			this.lookupReference('customeredit').reset();
+			this.getViewModel().set('editCustomer', false);
+			this.getStore('customers').reload();
 		}
 	},
 
 	onCustomerEditReset: function() {
-		var form = this.lookupReference('customeredit').getForm();
-		form.loadRecord(form.getRecord());
+		var customerEdit = this.lookupReference('customeredit');
+		customerEdit.loadRecord(customerEdit.getRecord());
 	},
 
 	onCustomerEditSubmit: function() {
@@ -71,40 +84,58 @@ Ext.define('MyCustomer.view.main.MainController', {
 		var customerGrid = this.lookupReference('customerGrid');
 
 		if (form.isValid()) {
-			form.updateRecord();
-			var record = form.getRecord();
-			if (record.phantom) {
-				record.setId(null);
-				record.save({
-					callback: function(r) {
-						customerStore.load({
-							callback: function() {
-								customerGrid.setSelection(r);
-								customerGrid.getView().focusRow(r);
+			var record = form.getRecord().copy();
+			form.updateRecord(record);
+
+			record.save({
+				callback: function(r, op) {
+					var validations = op.getResponse().result.validations;
+					if (validations) {
+						Ext.toast({
+							html: 'Input contains errors',
+							title: 'Error',
+							align: 't',
+							shadow: true,
+							width: 200,
+							slideInDuration: 200,
+							hideDuration: 500,
+							autoCloseDelay: 2000,
+							bodyStyle: {
+								background: 'red',
+								textAlign: 'center',
+								fontWeight: 'bold'
 							}
 						});
+						validations.forEach(function(validation) {
+							var field = form.findField(validation.field);
+							field.markInvalid(validation.message);
+							console.log(validation);
+						});
 					}
-				});
+					else {
+						this.getStore('customers').reload();
+						Ext.toast({
+							html: 'Data successfully saved',
+							title: 'Info',
+							align: 't',
+							shadow: true,
+							width: 200,
+							slideInDuration: 200,
+							hideDuration: 500,
+							autoCloseDelay: 2000,
+							bodyStyle: {
+								background: 'lime',
+								textAlign: 'center',
+								fontWeight: 'bold'
+							}
+						});
+						form.loadRecord(r);
+					}
+				},
+				scope: this
+			});
 
-			}
-			Ext.toast({
-			     html: 'Data successfully saved',
-			     title: 'Info',
-			     align: 't'
-			 });
 		}
-	},
-
-	newCustomer: function() {
-		var newCustomer = Ext.create('MyCustomer.model.Customer', {
-			lastName: 'New',
-			firstName: 'Person',
-			email: 'new@email.com',
-			sex: 'M',
-			category: 'C'
-		});
-		var form = this.lookupReference('customeredit').getForm();
-		form.loadRecord(newCustomer);
 	}
 
 });

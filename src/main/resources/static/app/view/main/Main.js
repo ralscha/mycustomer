@@ -1,15 +1,14 @@
 Ext.define('MyCustomer.view.main.Main', {
 	extend: 'Ext.container.Container',
-	requires: ['MyCustomer.view.customer.CustomerEdit',
-	           'MyCustomer.view.customer.CustomerPanel',
-	           'MyCustomer.view.main.MainController',
-	           'MyCustomer.view.main.MainModel', 
-	           'MyCustomer.view.customer.CategoryChartPanel'],
-	           
+	requires: [ 'MyCustomer.view.customer.CustomerEdit',
+			'MyCustomer.view.customer.CustomerPanel',
+			'MyCustomer.view.main.MainController', 'MyCustomer.view.main.MainModel',
+			'MyCustomer.view.customer.CategoryChartPanel' ],
+
 	controller: {
 		xclass: 'MyCustomer.view.main.MainController'
 	},
-	
+
 	viewModel: {
 		xclass: 'MyCustomer.view.main.MainModel'
 	},

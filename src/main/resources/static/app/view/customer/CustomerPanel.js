@@ -3,7 +3,7 @@ Ext.define('MyCustomer.view.customer.CustomerPanel', {
 
 	reference: 'customerGrid',
 
-	title: 'Customer',
+	title: 'Customers',
 	bind: {
 		store: '{customers}',
 		selection: '{selectedCustomer}'
@@ -78,7 +78,7 @@ Ext.define('MyCustomer.view.customer.CustomerPanel', {
 			editable: false,
 			value: 'All',
 			bind: {
-			    store: '{categories}',
+				store: '{categories}',
 				selection: '{selectedCategory}'
 			},
 			listeners: {
@@ -104,6 +104,13 @@ Ext.define('MyCustomer.view.customer.CustomerPanel', {
 				}
 			}
 		} ]
+	}, {
+		xtype: 'pagingtoolbar',
+		dock: 'bottom',
+		reference: 'pagingtoolbar',
+		bind: {
+			store: '{customers}'
+		}
 	} ]
 
 });

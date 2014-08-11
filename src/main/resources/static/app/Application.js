@@ -1,13 +1,13 @@
 Ext.define('MyCustomer.Application', {
-    extend: 'Ext.app.Application',
-    name: 'MyCustomer',
+	extend: 'Ext.app.Application',
+	name: 'MyCustomer',
 
 	constructor: function() {
 		Ext.direct.Manager.addProvider(Ext.app.REMOTING_API);
 		this.callParent(arguments);
 	},
-    
-    launch: function () {
+
+	launch: function() {
 		Ext.fly('appLoadingIndicator').destroy();
-    }
+	}
 });
