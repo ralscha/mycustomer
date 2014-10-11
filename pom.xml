@@ -17,16 +17,16 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.1.5.RELEASE</version>
+		<version>1.1.8.RELEASE </version>
 	</parent>
 
 	<properties>
 		<java.version>1.8</java.version>
-		<tomcat.version>8.0.9</tomcat.version>
-		<jackson.version>2.4.1</jackson.version>
-		<ext.version>5.0.1</ext.version>
+		<tomcat.version>8.0.14</tomcat.version>
+		<jackson.version>2.4.3</jackson.version>
+		<ext.version>5.0.2.1372-NIGHTLY</ext.version>
 		<h2.version>1.4.181</h2.version>
-		<querydsl.version>3.4.2</querydsl.version>
+		<querydsl.version>3.5.0</querydsl.version>
 		<hibernate.version>4.3.6.Final</hibernate.version>
 		<hibernate-validator.version>5.1.2.Final</hibernate-validator.version>
 
@@ -40,18 +40,7 @@
 	<repositories>
 		<repository>
 			<id>rasc</id>
-			<url>http://repository.rasc.ch</url>
-		</repository>
-		<repository>
-			<id>sonatype</id>
-			<name>sonatype</name>
-			<url>https://oss.sonatype.org/content/groups/public</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
+			<url>https://repo.rasc.ch</url>
 		</repository>
 	</repositories>
 
@@ -86,36 +75,24 @@
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.32</version>
+			<version>5.1.33</version>
 		</dependency>
 		<dependency>
 			<groupId>ch.ralscha</groupId>
 			<artifactId>extdirectspring</artifactId>
-			<version>1.4.3-SNAPSHOT</version>
+			<version>1.4.3</version>
 		</dependency>
 
 		<dependency>
 			<groupId>ch.rasc</groupId>
 			<artifactId>edsutil</artifactId>
-			<version>2.0.1</version>
+			<version>2.0.5</version>
 		</dependency>
 
 		<dependency>
 			<groupId>ch.rasc</groupId>
 			<artifactId>extclassgenerator-annotations</artifactId>
 			<version>1.0.5</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-			<version>2.4.1.3</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-core</artifactId>
-			<version>2.4.1.1</version>
 		</dependency>
 
 		<dependency>
@@ -152,7 +129,7 @@
 		<dependency>
 			<groupId>com.yahoo.platform.yui</groupId>
 			<artifactId>yuicompressor</artifactId>
-			<version>2.4.7</version>
+			<version>2.4.8</version>
 			<exclusions>
 				<exclusion>
 					<groupId>rhino</groupId>
