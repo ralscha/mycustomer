@@ -80,8 +80,6 @@ Ext.define('MyCustomer.view.main.MainController', {
 
 	onCustomerEditSubmit: function() {
 		var form = this.lookupReference('customeredit').getForm();
-		var customerStore = this.getStore('customers');
-		var customerGrid = this.lookupReference('customerGrid');
 
 		if (form.isValid()) {
 			var record = form.getRecord().copy();
