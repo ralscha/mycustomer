@@ -17,19 +17,14 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.2.0.RC1</version>
+		<version>1.2.1.RELEASE</version>
 	</parent>
 
 	<properties>
 		<java.version>1.8</java.version>
-
-
-		<ext.version>5.0.2.1552-NIGHTLY</ext.version>
-		<h2.version>1.4.182</h2.version>
-		<querydsl.version>3.5.1</querydsl.version>
-
-
-
+		<ext.version>5.1.1.183-NIGHTLY</ext.version>
+		<h2.version>1.4.185</h2.version>
+		<querydsl.version>3.6.0</querydsl.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.debug>true</maven.compiler.debug>
 
@@ -42,27 +37,7 @@
 			<id>rasc</id>
 			<url>https://repo.rasc.ch</url>
 		</repository>
-		<repository>
-			<id>spring-milestones</id>
-			<name>Spring Milestones</name>
-			<url>https://repo.spring.io/milestone</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
 	</repositories>
-
-	<pluginRepositories>
-		<pluginRepository>
-			<id>spring-milestones</id>
-			<name>Spring Milestones</name>
-			<url>https://repo.spring.io/milestone</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</pluginRepository>
-	</pluginRepositories>
-
 
 	<dependencies>
 
@@ -108,7 +83,7 @@
 		<dependency>
 			<groupId>ch.rasc</groupId>
 			<artifactId>edsutil</artifactId>
-			<version>2.0.6</version>
+			<version>2.0.7</version>
 		</dependency>
 
 		<dependency>
@@ -145,6 +120,12 @@
 		<dependency>
 			<groupId>resources</groupId>
 			<artifactId>ext-sencha-charts</artifactId>
+			<version>${ext.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>resources</groupId>
+			<artifactId>ext-sencha-charts-theme-crisp</artifactId>
 			<version>${ext.version}</version>
 		</dependency>
 

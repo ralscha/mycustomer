@@ -13,7 +13,7 @@
     dev: ignore
     prod: script
     
-  - path: /resources/ext/{ext.version}/sencha-charts.js
+  - path: /resources/ext/{ext.version}/sencha-charts/sencha-charts.js
     dev: script
     prod: script
   
@@ -45,3 +45,7 @@
   - path: /resources/ext/{ext.version}/ext-theme-crisp/ext-theme-crisp-all.css
     dev: link
     prod: link
+  - path: /resources/ext/{ext.version}/sencha-charts/theme-crisp/sencha-charts-all.css
+    classpath: /META-INF/resources
+    dev: link
+    prod: concat_minify      
