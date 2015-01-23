@@ -23,7 +23,7 @@ public class IndexController {
 	@ResponseBody
 	public String index(HttpServletResponse response) {
 		response.setContentType("text/html; charset=utf-8");
-		return indexHtml;
+		return this.indexHtml;
 	}
 
 }

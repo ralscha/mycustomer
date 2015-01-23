@@ -6,7 +6,7 @@ public class ValidationErrors {
 	private String[] message;
 
 	public String getField() {
-		return field;
+		return this.field;
 	}
 
 	public void setField(String field) {
@@ -14,7 +14,7 @@ public class ValidationErrors {
 	}
 
 	public String[] getMessage() {
-		return message;
+		return this.message;
 	}
 
 	public void setMessage(String[] message) {

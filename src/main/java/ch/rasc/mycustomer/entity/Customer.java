@@ -77,7 +77,7 @@ public class Customer extends AbstractPersistable<Long> {
 	private LocalDate dob;
 
 	public String getLastName() {
-		return lastName;
+		return this.lastName;
 	}
 
 	public void setLastName(String lastName) {
@@ -85,7 +85,7 @@ public class Customer extends AbstractPersistable<Long> {
 	}
 
 	public String getFirstName() {
-		return firstName;
+		return this.firstName;
 	}
 
 	public void setFirstName(String firstName) {
@@ -93,7 +93,7 @@ public class Customer extends AbstractPersistable<Long> {
 	}
 
 	public Sex getSex() {
-		return sex;
+		return this.sex;
 	}
 
 	public void setSex(Sex sex) {
@@ -101,7 +101,7 @@ public class Customer extends AbstractPersistable<Long> {
 	}
 
 	public String getEmail() {
-		return email;
+		return this.email;
 	}
 
 	public void setEmail(String email) {
@@ -109,7 +109,7 @@ public class Customer extends AbstractPersistable<Long> {
 	}
 
 	public String getAddress() {
-		return address;
+		return this.address;
 	}
 
 	public void setAddress(String address) {
@@ -117,7 +117,7 @@ public class Customer extends AbstractPersistable<Long> {
 	}
 
 	public String getCity() {
-		return city;
+		return this.city;
 	}
 
 	public void setCity(String city) {
@@ -125,7 +125,7 @@ public class Customer extends AbstractPersistable<Long> {
 	}
 
 	public String getZipCode() {
-		return zipCode;
+		return this.zipCode;
 	}
 
 	public void setZipCode(String zipCode) {
@@ -133,7 +133,7 @@ public class Customer extends AbstractPersistable<Long> {
 	}
 
 	public Category getCategory() {
-		return category;
+		return this.category;
 	}
 
 	public void setCategory(Category category) {
@@ -141,7 +141,7 @@ public class Customer extends AbstractPersistable<Long> {
 	}
 
 	public Boolean getNewsletter() {
-		return newsletter;
+		return this.newsletter;
 	}
 
 	public void setNewsletter(Boolean newsletter) {
@@ -149,7 +149,7 @@ public class Customer extends AbstractPersistable<Long> {
 	}
 
 	public LocalDate getDob() {
-		return dob;
+		return this.dob;
 	}
 
 	public void setDob(LocalDate dob) {
@@ -163,26 +163,28 @@ public class Customer extends AbstractPersistable<Long> {
 
 	@Override
 	public String toString() {
-		return "Customer [lastName=" + lastName + ", firstName=" + firstName + ", sex="
-				+ sex + ", email=" + email + ", address=" + address + ", city=" + city
-				+ ", zipCode=" + zipCode + ", category=" + category + ", newsletter="
-				+ newsletter + ", dob=" + dob + "]";
+		return "Customer [lastName=" + this.lastName + ", firstName=" + this.firstName
+				+ ", sex=" + this.sex + ", email=" + this.email + ", address="
+				+ this.address + ", city=" + this.city + ", zipCode=" + this.zipCode
+				+ ", category=" + this.category + ", newsletter=" + this.newsletter
+				+ ", dob=" + this.dob + "]";
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + (address == null ? 0 : address.hashCode());
-		result = prime * result + (category == null ? 0 : category.hashCode());
-		result = prime * result + (city == null ? 0 : city.hashCode());
-		result = prime * result + (dob == null ? 0 : dob.hashCode());
-		result = prime * result + (email == null ? 0 : email.hashCode());
-		result = prime * result + (firstName == null ? 0 : firstName.hashCode());
-		result = prime * result + (lastName == null ? 0 : lastName.hashCode());
-		result = prime * result + (newsletter ? 1231 : 1237);
-		result = prime * result + (sex == null ? 0 : sex.hashCode());
-		result = prime * result + (zipCode == null ? 0 : zipCode.hashCode());
+		result = prime * result + (this.address == null ? 0 : this.address.hashCode());
+		result = prime * result + (this.category == null ? 0 : this.category.hashCode());
+		result = prime * result + (this.city == null ? 0 : this.city.hashCode());
+		result = prime * result + (this.dob == null ? 0 : this.dob.hashCode());
+		result = prime * result + (this.email == null ? 0 : this.email.hashCode());
+		result = prime * result
+				+ (this.firstName == null ? 0 : this.firstName.hashCode());
+		result = prime * result + (this.lastName == null ? 0 : this.lastName.hashCode());
+		result = prime * result + (this.newsletter ? 1231 : 1237);
+		result = prime * result + (this.sex == null ? 0 : this.sex.hashCode());
+		result = prime * result + (this.zipCode == null ? 0 : this.zipCode.hashCode());
 		return result;
 	}
 
@@ -198,69 +200,69 @@ public class Customer extends AbstractPersistable<Long> {
 			return false;
 		}
 		Customer other = (Customer) obj;
-		if (address == null) {
+		if (this.address == null) {
 			if (other.address != null) {
 				return false;
 			}
 		}
-		else if (!address.equals(other.address)) {
+		else if (!this.address.equals(other.address)) {
 			return false;
 		}
-		if (category != other.category) {
+		if (this.category != other.category) {
 			return false;
 		}
-		if (city == null) {
+		if (this.city == null) {
 			if (other.city != null) {
 				return false;
 			}
 		}
-		else if (!city.equals(other.city)) {
+		else if (!this.city.equals(other.city)) {
 			return false;
 		}
-		if (dob == null) {
+		if (this.dob == null) {
 			if (other.dob != null) {
 				return false;
 			}
 		}
-		else if (!dob.equals(other.dob)) {
+		else if (!this.dob.equals(other.dob)) {
 			return false;
 		}
-		if (email == null) {
+		if (this.email == null) {
 			if (other.email != null) {
 				return false;
 			}
 		}
-		else if (!email.equals(other.email)) {
+		else if (!this.email.equals(other.email)) {
 			return false;
 		}
-		if (firstName == null) {
+		if (this.firstName == null) {
 			if (other.firstName != null) {
 				return false;
 			}
 		}
-		else if (!firstName.equals(other.firstName)) {
+		else if (!this.firstName.equals(other.firstName)) {
 			return false;
 		}
-		if (lastName == null) {
+		if (this.lastName == null) {
 			if (other.lastName != null) {
 				return false;
 			}
 		}
-		else if (!lastName.equals(other.lastName)) {
+		else if (!this.lastName.equals(other.lastName)) {
 			return false;
 		}
-		if (newsletter != other.newsletter) {
+		if (this.newsletter != other.newsletter) {
 			return false;
 		}
-		if (sex != other.sex) {
+		if (this.sex != other.sex) {
 			return false;
 		}
-		if (zipCode == null) {
+		if (this.zipCode == null) {
 			if (other.zipCode != null) {
 				return false;
 			}
 		}
-		else if (!zipCode.equals(other.zipCode)) {
+		else if (!this.zipCode.equals(other.zipCode)) {
 			return false;
 		}
 		return true;

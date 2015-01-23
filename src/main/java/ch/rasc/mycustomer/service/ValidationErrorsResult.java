@@ -21,7 +21,7 @@ public class ValidationErrorsResult<T> extends ExtDirectStoreResult<T> {
 	}
 
 	public List<ValidationErrors> getValidations() {
-		return validations;
+		return this.validations;
 	}
 
 	public void setValidations(List<ValidationErrors> validations) {

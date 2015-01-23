@@ -12,11 +12,11 @@ public class CategoryData {
 	}
 
 	public String getCategory() {
-		return category;
+		return this.category;
 	}
 
 	public BigDecimal getPercent() {
-		return percent;
+		return this.percent;
 	}
 
 }

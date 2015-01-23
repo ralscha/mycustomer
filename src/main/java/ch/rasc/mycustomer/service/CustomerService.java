@@ -78,7 +78,7 @@ public class CustomerService {
 		}
 
 		Pageable pageable = RepositoryUtil.createPageable(readRequest);
-		Page<Customer> page = customerRepository.findAll(bb, pageable);
+		Page<Customer> page = this.customerRepository.findAll(bb, pageable);
 		return new ExtDirectStoreResult<>(page.getTotalElements(), page.getContent());
 
 	}
@@ -90,7 +90,7 @@ public class CustomerService {
 		List<ValidationErrors> violations = validateEntity(newCustomer);
 		ValidationErrorsResult<Customer> result;
 		if (violations.isEmpty()) {
-			Customer insertedCustomer = customerRepository.save(newCustomer);
+			Customer insertedCustomer = this.customerRepository.save(newCustomer);
 			System.out.println("NEW CUSTOMER: " + insertedCustomer.getId());
 			result = new ValidationErrorsResult<>(insertedCustomer);
 		}
@@ -107,7 +107,7 @@ public class CustomerService {
 		List<ValidationErrors> violations = validateEntity(updatedCustomer);
 		ValidationErrorsResult<Customer> result;
 		if (violations.isEmpty()) {
-			Customer savedCustomer = customerRepository.save(updatedCustomer);
+			Customer savedCustomer = this.customerRepository.save(updatedCustomer);
 			result = new ValidationErrorsResult<>(savedCustomer);
 		}
 		else {
@@ -118,7 +118,8 @@ public class CustomerService {
 	}
 
 	protected <T> List<ValidationErrors> validateEntity(T entity) {
-		Set<ConstraintViolation<T>> constraintViolations = validator.validate(entity);
+		Set<ConstraintViolation<T>> constraintViolations = this.validator
+				.validate(entity);
 		Map<String, List<String>> fieldMessages = new HashMap<>();
 		if (!constraintViolations.isEmpty()) {
 			for (ConstraintViolation<T> constraintViolation : constraintViolations) {
@@ -145,14 +146,14 @@ public class CustomerService {
 	@ExtDirectMethod(STORE_MODIFY)
 	public void destroy(Customer destroyCustomer) {
 		System.out.println("DESTROY USER: " + destroyCustomer);
-		customerRepository.delete(destroyCustomer);
+		this.customerRepository.delete(destroyCustomer);
 	}
 
 	@ExtDirectMethod(STORE_READ)
 	public List<CategoryData> readCategoryData() {
-		BigDecimal totalCount = new BigDecimal(customerRepository.count());
-		List<Tuple> queryResult = new JPAQuery(entityManager).from(QCustomer.customer)
-				.groupBy(QCustomer.customer.category)
+		BigDecimal totalCount = new BigDecimal(this.customerRepository.count());
+		List<Tuple> queryResult = new JPAQuery(this.entityManager)
+				.from(QCustomer.customer).groupBy(QCustomer.customer.category)
 				.list(QCustomer.customer.category, QCustomer.customer.category.count());
 
 		List<CategoryData> result = new ArrayList<>();
