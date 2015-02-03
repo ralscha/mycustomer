@@ -42,7 +42,10 @@
 ---
   variable: app_css
   resources:
-  - path: /resources/ext/{ext.version}/ext-theme-crisp/ext-theme-crisp-all.css
+  - path: /resources/ext/{ext.version}/ext-theme-crisp/ext-theme-crisp-all_01.css
+    dev: link
+    prod: link
+  - path: /resources/ext/{ext.version}/ext-theme-crisp/ext-theme-crisp-all_02.css
     dev: link
     prod: link
   - path: /resources/ext/{ext.version}/sencha-charts/theme-crisp/sencha-charts-all.css
