@@ -21,6 +21,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import com.mysema.query.BooleanBuilder;
+import com.mysema.query.Tuple;
+import com.mysema.query.jpa.impl.JPAQuery;
+
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.bean.ExtDirectStoreReadRequest;
 import ch.ralscha.extdirectspring.bean.ExtDirectStoreResult;
@@ -31,10 +35,6 @@ import ch.rasc.mycustomer.entity.Category;
 import ch.rasc.mycustomer.entity.Customer;
 import ch.rasc.mycustomer.entity.QCustomer;
 import ch.rasc.mycustomer.repository.CustomerRepository;
-
-import com.mysema.query.BooleanBuilder;
-import com.mysema.query.Tuple;
-import com.mysema.query.jpa.impl.JPAQuery;
 
 @Service
 public class CustomerService {
@@ -70,8 +70,8 @@ public class CustomerService {
 
 		BooleanBuilder bb = new BooleanBuilder();
 		if (StringUtils.hasText(name)) {
-			bb.and(QCustomer.customer.firstName.startsWith(name).or(
-					QCustomer.customer.lastName.startsWith(name)));
+			bb.and(QCustomer.customer.firstName.startsWith(name)
+					.or(QCustomer.customer.lastName.startsWith(name)));
 		}
 		if (StringUtils.hasText(category) && !"All".equals(category)) {
 			bb.and(QCustomer.customer.category.eq(Category.valueOf(category)));
@@ -161,8 +161,9 @@ public class CustomerService {
 			Category category = tuple.get(QCustomer.customer.category);
 			long categoryCount = tuple.get(QCustomer.customer.category.count());
 
-			CategoryData cd = new CategoryData(category.name(), new BigDecimal(
-					categoryCount * 100).divide(totalCount, 2, RoundingMode.HALF_UP));
+			CategoryData cd = new CategoryData(category.name(),
+					new BigDecimal(categoryCount * 100).divide(totalCount, 2,
+							RoundingMode.HALF_UP));
 			result.add(cd);
 		}
 

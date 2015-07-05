@@ -2,10 +2,10 @@ package ch.rasc.mycustomer.service;
 
 import java.util.List;
 
-import ch.ralscha.extdirectspring.bean.ExtDirectStoreResult;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
+import ch.ralscha.extdirectspring.bean.ExtDirectStoreResult;
 
 @JsonInclude(Include.NON_NULL)
 public class ValidationErrorsResult<T> extends ExtDirectStoreResult<T> {
