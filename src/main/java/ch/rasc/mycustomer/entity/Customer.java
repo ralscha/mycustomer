@@ -14,11 +14,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-import ch.rasc.edsutil.jackson.ISO8601LocalDateDeserializer;
-import ch.rasc.edsutil.jackson.ISO8601LocalDateSerializer;
 import ch.rasc.extclassgenerator.Model;
 import ch.rasc.extclassgenerator.ModelField;
 import ch.rasc.extclassgenerator.ModelType;
@@ -71,8 +67,6 @@ public class Customer extends AbstractPersistable<Long> {
 	private Boolean newsletter;
 
 	@Column(length = 10)
-	@JsonSerialize(using = ISO8601LocalDateSerializer.class)
-	@JsonDeserialize(using = ISO8601LocalDateDeserializer.class)
 	@ModelField(dateFormat = "Y-m-d")
 	private LocalDate dob;
 

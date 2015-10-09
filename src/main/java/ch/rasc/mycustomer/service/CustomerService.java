@@ -30,11 +30,11 @@ import ch.ralscha.extdirectspring.bean.ExtDirectStoreReadRequest;
 import ch.ralscha.extdirectspring.bean.ExtDirectStoreResult;
 import ch.ralscha.extdirectspring.filter.Filter;
 import ch.ralscha.extdirectspring.filter.StringFilter;
-import ch.rasc.edsutil.RepositoryUtil;
 import ch.rasc.mycustomer.entity.Category;
 import ch.rasc.mycustomer.entity.Customer;
 import ch.rasc.mycustomer.entity.QCustomer;
 import ch.rasc.mycustomer.repository.CustomerRepository;
+import ch.rasc.mycustomer.util.RepositoryUtil;
 
 @Service
 public class CustomerService {
