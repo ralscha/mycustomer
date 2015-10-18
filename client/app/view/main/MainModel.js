@@ -1,6 +1,5 @@
 Ext.define('MyCustomer.view.main.MainModel', {
 	extend: 'Ext.app.ViewModel',
-	requires: [ 'MyCustomer.model.Customer' ],
 
 	data: {
 		selectedCustomer: null,

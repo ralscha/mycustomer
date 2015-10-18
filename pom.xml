@@ -8,7 +8,7 @@
 	<packaging>jar</packaging>
 
 	<prerequisites>
-		<maven>3.1.0</maven>
+		<maven>3.3.3</maven>
 	</prerequisites>
 
 	<name>MyCustomer</name>
@@ -18,12 +18,13 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>1.3.0.M5</version>
+		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
 	<properties>
 		<start-class>ch.rasc.mycustomer.Application</start-class>
 		<java.version>1.8</java.version>
-		<h2.version>1.4.189</h2.version>
+		<h2.version>1.4.190</h2.version>
 		<querydsl.version>3.6.8</querydsl.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.debug>true</maven.compiler.debug>
@@ -50,7 +51,7 @@
 		<dependency>
 			<groupId>ch.ralscha</groupId>
 			<artifactId>extdirectspring</artifactId>
-			<version>1.6.1-SNAPSHOT</version>
+			<version>1.6.1</version>
 		</dependency>
 
 		<dependency>
@@ -214,14 +215,6 @@
 	</build>
 
 	<repositories>
-		<repository>
-			<id>sonatype-snapshots</id>
-			<name>Sontatype Snapshots</name>
-			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
-			<snapshots>
-				<enabled>true</enabled>
-			</snapshots>
-		</repository>
 		<repository>
 			<id>spring-snapshots</id>
 			<name>Spring Snapshots</name>

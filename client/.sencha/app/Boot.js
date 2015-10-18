@@ -4,16 +4,17 @@
 var Ext = Ext || {};
 
 //<editor-fold desc="Boot">
-/*
+/**
  * @class Ext.Boot
  * @singleton
+ * @private
  */
 Ext.Boot = Ext.Boot || (function (emptyFn) {
 
     var doc = document,
         _emptyArray = [],
         _config = {
-            /*
+            /**
              * @cfg {Boolean} [disableCaching=true]
              * If `true` current timestamp is added to script URL's to prevent caching.
              * In debug builds, adding a "cache" or "disableCacheBuster" query parameter
@@ -24,13 +25,13 @@ Ext.Boot = Ext.Boot || (function (emptyFn) {
                 /(^|[ ;])ext-cache=1/.test(doc.cookie)) ? false :
                 true,
 
-            /*
+            /**
              * @cfg {String} [disableCachingParam="_dc"]
              * The query parameter name for the cache buster's timestamp.
              */
             disableCachingParam: '_dc',
 
-            /*
+            /**
              * @cfg {Boolean} loadDelay
              * Millisecond delay between asynchronous script injection (prevents stack
              * overflow on some user agents) 'false' disables delay but potentially
@@ -38,14 +39,14 @@ Ext.Boot = Ext.Boot || (function (emptyFn) {
              */
             loadDelay: false,
 
-            /*
+            /**
              * @cfg {Boolean} preserveScripts
              * `false` to remove asynchronously loaded scripts, `true` to retain script
              * element for browser debugger compatibility and improved load performance.
              */
             preserveScripts: true,
 
-            /*
+            /**
              * @cfg {String} [charset=UTF-8]
              * Optional charset to specify encoding of dynamic content.
              */
@@ -154,7 +155,7 @@ Ext.Boot = Ext.Boot || (function (emptyFn) {
                  */
             },
 
-            /*
+            /**
              * contains the current script name being loaded
              * (loadSync or sequential load only)
              */
@@ -173,7 +174,7 @@ Ext.Boot = Ext.Boot || (function (emptyFn) {
             debug: _debug,
             //</debug>
 
-            /*
+            /**
              * enables / disables loading scripts via script / link elements rather
              * than using ajax / eval
              */
@@ -468,12 +469,13 @@ Ext.Boot = Ext.Boot || (function (emptyFn) {
              * Extracts user supplied platform tags from the "platformTags" query parameter
              * of the form:
              *
-             * ?platformTags=name:state,name:state,...
+             *      ?platformTags=name:state,name:state,...
              *
              * (each tag defaults to true when state is unspecified)
              *
              * Example:
-             * ?platformTags=isTablet,isPhone:false,isDesktop:0,iOS:1,Safari:true, ...
+             *
+             *      ?platformTags=isTablet,isPhone:false,isDesktop:0,iOS:1,Safari:true, ...
              *
              * @returns {Object} the platform tags supplied by the query string
              */
@@ -589,7 +591,7 @@ Ext.Boot = Ext.Boot || (function (emptyFn) {
                 Ext.filterPlatform = Boot.filterPlatform;
             },
 
-            /*
+            /**
              * This method returns a canonical URL for the given URL.
              *
              * For example, the following all produce the same canonical URL (which is the
@@ -628,7 +630,7 @@ Ext.Boot = Ext.Boot || (function (emptyFn) {
                 return ret;
             },
 
-            /*
+            /**
              * Get the config value corresponding to the specified name. If no name is given, will return the config object
              * @param {String} name The config property name
              * @return {Object}
@@ -637,7 +639,7 @@ Ext.Boot = Ext.Boot || (function (emptyFn) {
                 return name ? Boot.config[name] : Boot.config;
             },
 
-            /*
+            /**
              * Set the configuration.
              * @param {Object} config The config object to override the default values.
              * @return {Ext.Boot} this
@@ -781,7 +783,7 @@ Ext.Boot = Ext.Boot || (function (emptyFn) {
                 }
             },
 
-            /*
+            /**
              * this is a helper function used by Ext.Loader to flush out
              * 'uses' arrays for classes
              */
@@ -844,12 +846,11 @@ Ext.Boot = Ext.Boot || (function (emptyFn) {
             }
         };
 
-    /*
-     * The request class encapsulates a series of Entry objects
-     * and provides notification around the completion of all Entries
-     * in this request.
-     */
     function Request(cfg) {
+         //The request class encapsulates a series of Entry objects
+         //and provides notification around the completion of all Entries
+         //in this request.
+
         if(cfg.$isRequest) {
             return cfg;
         }
@@ -868,11 +869,6 @@ Ext.Boot = Ext.Boot || (function (emptyFn) {
     Request.prototype = {
         $isRequest: true,
 
-        /*
-         * @private
-         * @param manifest
-         * @returns {*}
-         */
         createLoadOrderMap: function (loadOrder) {
             var len = loadOrder.length,
                 loadOrderMap = {},
@@ -886,12 +882,6 @@ Ext.Boot = Ext.Boot || (function (emptyFn) {
             return loadOrderMap;
         },
 
-        /*
-         * @private
-         * @param index
-         * @param indexMap
-         * @returns {{}}
-         */
         getLoadIndexes: function (index, indexMap, loadOrder, includeUses, skipLoaded) {
             var item = loadOrder[index],
                 len, i, reqs, entry, stop, added, idx, ridx, url;
@@ -1196,12 +1186,11 @@ Ext.Boot = Ext.Boot || (function (emptyFn) {
         }
     };
 
-    /*
-     * The Entry class is a token to manage the load and evaluation
-     * state of a particular url.  It is used to notify all Requests
-     * interested in this url that the content is available.
-     */
     function Entry(cfg) {
+         //The Entry class is a token to manage the load and evaluation
+         //state of a particular url.  It is used to notify all Requests
+         //interested in this url that the content is available.
+
         if(cfg.$isEntry) {
             return cfg;
         }
@@ -1576,9 +1565,6 @@ Ext.Boot = Ext.Boot || (function (emptyFn) {
             }
         },
 
-        /*
-         * @private
-         */
         cleanup: function () {
             var me = this,
                 el = me.el,
@@ -1650,7 +1636,7 @@ Ext.Boot = Ext.Boot || (function (emptyFn) {
         }
     };
 
-    /*
+    /**
      * Turns on or off the "cache buster" applied to dynamically loaded scripts. Normally
      * dynamically loaded scripts have an extra query parameter appended to avoid stale
      * cached scripts. This method can be used to disable this mechanism, and is primarily
@@ -1684,12 +1670,13 @@ Ext.Boot = Ext.Boot || (function (emptyFn) {
 }(function () {
 }));//(eval("/*@cc_on!@*/!1"));
 
-/*
+/**
  * This method evaluates the given code free of any local variable. This
  * will be at global scope, in others it will be in a function.
- * @parma {String} code The code to evaluate.
+ * @param {String} code The code to evaluate.
  * @private
  * @method
+ * @member Ext
  */
 Ext.globalEval = Ext.globalEval || (this.execScript
     ? function (code) { execScript(code); }

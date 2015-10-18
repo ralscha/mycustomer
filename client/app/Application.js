@@ -1,6 +1,6 @@
 Ext.define('MyCustomer.Application', {
 	extend: 'Ext.app.Application',
-	requires: [ 'MyCustomer.*', 'Ext.plugin.Viewport', 'Ext.direct.RemotingProvider', 'Ext.window.Toast', 'MyCustomer.store.CategoriesReport' ],
+	requires: [ 'MyCustomer.*', 'Ext.plugin.Viewport', 'Ext.direct.RemotingProvider', 'Ext.window.Toast' ],
 	name: 'MyCustomer',
 
 	stores: [ 'CategoriesReport' ],
@@ -17,6 +17,10 @@ Ext.define('MyCustomer.Application', {
 		Ext.direct.Manager.addProvider(REMOTING_API);
 
 		this.callParent(arguments);
+	},
+
+	launch: function() {
+		Ext.fly('loading_container').destroy();
 	},
 
 	onAppUpdate: function() {
