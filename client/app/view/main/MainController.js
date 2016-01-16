@@ -110,7 +110,6 @@ Ext.define('MyCustomer.view.main.MainController', {
 						validations.forEach(function(validation) {
 							var field = form.findField(validation.field);
 							field.markInvalid(validation.message);
-							console.log(validation);
 						});
 					}
 					else {
