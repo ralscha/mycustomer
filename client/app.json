@@ -294,7 +294,7 @@
     "production": {
         "output": {
             "appCache": {
-                "enable": true,
+                "enable": false,
                 "path": "cache.appcache"
             }
         },
