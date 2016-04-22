@@ -57,7 +57,7 @@
 		<dependency>
 			<groupId>ch.rasc</groupId>
 			<artifactId>extclassgenerator-annotations</artifactId>
-			<version>1.0.8</version>
+			<version>1.0.9</version>
 		</dependency>
 
 		<dependency>
@@ -119,7 +119,7 @@
 					<dependency>
 						<groupId>ch.rasc</groupId>
 						<artifactId>extclassgenerator</artifactId>
-						<version>1.0.8</version>
+						<version>1.0.9</version>
 					</dependency>
 					<dependency>
 						<groupId>com.mysema.querydsl</groupId>

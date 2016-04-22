@@ -14,6 +14,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import ch.rasc.extclassgenerator.Model;
 import ch.rasc.extclassgenerator.ModelField;
@@ -25,6 +27,7 @@ import ch.rasc.extclassgenerator.ModelType;
 		destroyMethod = "customerService.destroy", identifier = "negative")
 @Entity
 @JsonIgnoreProperties("new")
+@JsonInclude(Include.NON_NULL)
 public class Customer extends AbstractPersistable<Long> {
 
 	private static final long serialVersionUID = 1L;
@@ -41,7 +44,7 @@ public class Customer extends AbstractPersistable<Long> {
 	@Column(length = 1)
 	@ModelField(type = ModelType.STRING, allowNull = true)
 	@NotNull
-	private Sex sex;
+	private Gender gender;
 
 	@Email
 	@Length(min = 1, max = 200)
@@ -86,12 +89,12 @@ public class Customer extends AbstractPersistable<Long> {
 		this.firstName = firstName;
 	}
 
-	public Sex getSex() {
-		return this.sex;
+	public Gender getGender() {
+		return this.gender;
 	}
 
-	public void setSex(Sex sex) {
-		this.sex = sex;
+	public void setGender(Gender gender) {
+		this.gender = gender;
 	}
 
 	public String getEmail() {
@@ -158,7 +161,7 @@ public class Customer extends AbstractPersistable<Long> {
 	@Override
 	public String toString() {
 		return "Customer [lastName=" + this.lastName + ", firstName=" + this.firstName
-				+ ", sex=" + this.sex + ", email=" + this.email + ", address="
+				+ ", gender=" + this.gender + ", email=" + this.email + ", address="
 				+ this.address + ", city=" + this.city + ", zipCode=" + this.zipCode
 				+ ", category=" + this.category + ", newsletter=" + this.newsletter
 				+ ", dob=" + this.dob + "]";
@@ -175,9 +178,10 @@ public class Customer extends AbstractPersistable<Long> {
 		result = prime * result + (this.email == null ? 0 : this.email.hashCode());
 		result = prime * result
 				+ (this.firstName == null ? 0 : this.firstName.hashCode());
+		result = prime * result + (this.gender == null ? 0 : this.gender.hashCode());
 		result = prime * result + (this.lastName == null ? 0 : this.lastName.hashCode());
-		result = prime * result + (this.newsletter ? 1231 : 1237);
-		result = prime * result + (this.sex == null ? 0 : this.sex.hashCode());
+		result = prime * result
+				+ (this.newsletter == null ? 0 : this.newsletter.hashCode());
 		result = prime * result + (this.zipCode == null ? 0 : this.zipCode.hashCode());
 		return result;
 	}
@@ -237,6 +241,9 @@ public class Customer extends AbstractPersistable<Long> {
 		else if (!this.firstName.equals(other.firstName)) {
 			return false;
 		}
+		if (this.gender != other.gender) {
+			return false;
+		}
 		if (this.lastName == null) {
 			if (other.lastName != null) {
 				return false;
@@ -245,10 +252,12 @@ public class Customer extends AbstractPersistable<Long> {
 		else if (!this.lastName.equals(other.lastName)) {
 			return false;
 		}
-		if (this.newsletter != other.newsletter) {
-			return false;
+		if (this.newsletter == null) {
+			if (other.newsletter != null) {
+				return false;
+			}
 		}
-		if (this.sex != other.sex) {
+		else if (!this.newsletter.equals(other.newsletter)) {
 			return false;
 		}
 		if (this.zipCode == null) {

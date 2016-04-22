@@ -26,7 +26,7 @@ Ext.define('MyCustomer.view.customer.CustomerPanel', {
 		text: 'Email',
 		flex: 1
 	}, {
-		dataIndex: 'sex',
+		dataIndex: 'gender',
 		text: 'Gender',
 		renderer: function(value) {
 			if (value === 'M') {

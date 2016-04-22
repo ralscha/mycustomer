@@ -1,5 +1,5 @@
 package ch.rasc.mycustomer.entity;
 
-public enum Sex {
+public enum Gender {
 	M, F
 }

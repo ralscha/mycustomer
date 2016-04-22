@@ -18,12 +18,10 @@ Ext.define('MyCustomer.view.customer.CustomerEdit', {
 	items: [ {
 		fieldLabel: 'First Name',
 		name: 'firstName',
-
 		anchor: '100%'
 	}, {
 		fieldLabel: 'Last Name',
 		name: 'lastName',
-
 		anchor: '100%'
 	}, {
 		fieldLabel: 'E-Mail',
@@ -58,9 +56,9 @@ Ext.define('MyCustomer.view.customer.CustomerEdit', {
 		anchor: '50%'
 	}, {
 		xtype: 'radiogroup',
-		fieldLabel: 'Sex',
+		fieldLabel: 'Gender',
 		defaults: {
-			name: 'sex'
+			name: 'gender'
 		},
 		items: [ {
 			boxLabel: 'Male',

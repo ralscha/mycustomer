@@ -24,7 +24,7 @@ Ext.define("MyCustomer.model.Customer",
       type : "presence"
     } ]
   }, {
-    name : "sex",
+    name : "gender",
     type : "string",
     allowNull : true,
     validators : [ {
