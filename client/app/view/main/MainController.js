@@ -28,7 +28,9 @@ Ext.define('MyCustomer.view.main.MainController', {
 	},
 
 	newCustomer: function() {
-		var newCustomer = new MyCustomer.model.Customer();
+		var newCustomer = new MyCustomer.model.Customer({
+			gender: 'M'
+		});
 		this.getViewModel().set('currentCustomer', newCustomer);
 
 		Ext.defer(function() {
