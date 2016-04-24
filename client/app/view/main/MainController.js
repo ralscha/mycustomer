@@ -2,140 +2,78 @@ Ext.define('MyCustomer.view.main.MainController', {
 	extend: 'Ext.app.ViewController',
 
 	onStoreLoad: function(s) {
+		var total = s.getTotalCount();
 		this.getViewModel().set('numberOfCustomers', s.getTotalCount());
 		Ext.getStore('categories-report').load();
-	},
 
-	onCategoryChange: function(cb, value) {
-		this.applyFilters();
-	},
-
-	onNameChange: function(field, newValue) {
-		this.applyFilters();
-	},
-
-	applyFilters: function() {
-		var viewModel = this.getViewModel();
-		var myStore = this.getStore('customers');
-		var nameFilter = viewModel.get('nameFilter');
-		var categoryFilter = viewModel.get('selectedCategory');
-
-		this.lookup('customeredit').reset();
-		this.getViewModel().set('editCustomer', false);
-
-		var filters = [];
-
-		if (nameFilter) {
-			filters.push(new Ext.util.Filter({
-				property: 'name',
-				value: nameFilter
-			}));
-		}
-		if (categoryFilter) {
-			filters.push(new Ext.util.Filter({
-				property: 'category',
-				value: categoryFilter.data.value
-			}));
-		}
-
-		if (filters.length > 0) {
-			myStore.clearFilter(true);
-			myStore.filter(filters);
+		// if there is only 1 item in the list, autoselect it
+		if (total === 1) {
+			this.getViewModel().set('currentCustomer', s.first());
 		}
 		else {
-			myStore.clearFilter();
+			this.getViewModel().set('currentCustomer', null);
 		}
 	},
 
 	onItemClick: function(button, record) {
-		var selectedCustomer = this.getViewModel().get('selectedCustomer');
-		this.getViewModel().set('editCustomer', true);
+		// reject any pending changes of previous selected record
+		if (this.selectedRecord && this.selectedRecord.dirty) {
+			this.selectedRecord.reject();
+		}
+		this.selectedRecord = record;
+	},
 
-		var form = this.lookup('customeredit');
-		form.loadRecord(selectedCustomer);
-		form.focus();
+	onNameChange: function(field, newValue) {
+		this.getViewModel().set('nameFilter', newValue);
 	},
 
 	newCustomer: function() {
 		var newCustomer = new MyCustomer.model.Customer();
-		this.getViewModel().set('editCustomer', true);
-		this.lookup('customeredit').loadRecord(newCustomer);
+		this.getViewModel().set('currentCustomer', newCustomer);
+
+		Ext.defer(function() {
+			this.lookup('customeredit').focus();
+			this.lookup('customeredit').isValid();
+		}, 5, this);
 	},
 
 	deleteCustomer: function() {
-		Ext.Msg.confirm('Confirm', 'Are you sure?', 'onConfirm', this);
+		var currentCustomer = this.getViewModel().get('currentCustomer');
+		Ext.Msg.confirm('Confirm', 'Are you sure you want to<br>delete customer <b>' + currentCustomer.get('lastName') + '</b>?', 'onConfirm', this);
 	},
 
 	onConfirm: function(choice) {
 		if (choice === 'yes') {
-			var selectedCustomer = this.getViewModel().get('selectedCustomer');
-			selectedCustomer.erase();
-			this.lookup('customeredit').reset();
-			this.getViewModel().set('editCustomer', false);
+			var currentCustomer = this.getViewModel().get('currentCustomer');
+			currentCustomer.erase();
 			this.getStore('customers').reload();
 		}
 	},
 
 	onCustomerEditReset: function() {
-		var customerEdit = this.lookup('customeredit');
-		customerEdit.loadRecord(customerEdit.getRecord());
+		var cust = this.getViewModel().get('currentCustomer');
+		cust.reject();
 	},
 
 	onCustomerEditSubmit: function() {
-		var form = this.lookup('customeredit').getForm();
+		var cust = this.getViewModel().get('currentCustomer');
+		cust.save({
+			success: function() {
+				this.getStore('customers').reload();
+			},
+			failure: function(record, op) {
+				var validations = op.getResponse().result.validations;
+				if (validations) {
+					var form = this.lookup('customeredit').getForm();
+					validations.forEach(function(validation) {
+						var field = form.findField(validation.field);
+						field.markInvalid(validation.message);
+					});
+				}
+			},
+			scope: this
+		});
 
-		if (form.isValid()) {
-			var record = form.getRecord().copy();
-			form.updateRecord(record);
-
-			record.save({
-				callback: function(r, op) {
-					var validations = op.getResponse().result.validations;
-					if (validations) {
-						Ext.toast({
-							html: 'Input contains errors',
-							title: 'Error',
-							align: 't',
-							shadow: true,
-							width: 200,
-							slideInDuration: 200,
-							hideDuration: 500,
-							autoCloseDelay: 2000,
-							bodyStyle: {
-								background: 'red',
-								textAlign: 'center',
-								fontWeight: 'bold'
-							}
-						});
-						validations.forEach(function(validation) {
-							var field = form.findField(validation.field);
-							field.markInvalid(validation.message);
-						});
-					}
-					else {
-						this.getStore('customers').reload();
-						Ext.toast({
-							html: 'Data successfully saved',
-							title: 'Info',
-							align: 't',
-							shadow: true,
-							width: 200,
-							slideInDuration: 200,
-							hideDuration: 500,
-							autoCloseDelay: 2000,
-							bodyStyle: {
-								background: 'lime',
-								textAlign: 'center',
-								fontWeight: 'bold'
-							}
-						});
-						form.loadRecord(r);
-					}
-				},
-				scope: this
-			});
-
-		}
 	}
 
 });

@@ -4,7 +4,7 @@ Ext.define('MyCustomer.store.CategoriesReport', {
 	fields: [ 'category', 'percent' ],
 
 	pageSize: 0,
-	autoLoad: true,
+	autoLoad: false,
 	proxy: {
 		type: 'direct',
 		directFn: 'customerService.readCategoryData'

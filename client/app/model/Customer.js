@@ -26,7 +26,6 @@ Ext.define("MyCustomer.model.Customer",
   }, {
     name : "gender",
     type : "string",
-    allowNull : true,
     validators : [ {
       type : "presence"
     } ]
@@ -60,10 +59,7 @@ Ext.define("MyCustomer.model.Customer",
     } ]
   }, {
     name : "newsletter",
-    type : "boolean",
-    validators : [ {
-      type : "presence"
-    } ]
+    type : "boolean"
   }, {
     name : "dob",
     type : "date",

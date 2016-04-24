@@ -42,7 +42,7 @@ public class Customer extends AbstractPersistable<Long> {
 
 	@Enumerated(EnumType.STRING)
 	@Column(length = 1)
-	@ModelField(type = ModelType.STRING, allowNull = true)
+	@ModelField(type = ModelType.STRING)
 	@NotNull
 	private Gender gender;
 
@@ -66,8 +66,7 @@ public class Customer extends AbstractPersistable<Long> {
 	@NotNull
 	private Category category;
 
-	@NotNull
-	private Boolean newsletter;
+	private boolean newsletter;
 
 	@Column(length = 10)
 	@ModelField(dateFormat = "Y-m-d")
@@ -137,11 +136,11 @@ public class Customer extends AbstractPersistable<Long> {
 		this.category = category;
 	}
 
-	public Boolean getNewsletter() {
+	public boolean isNewsletter() {
 		return this.newsletter;
 	}
 
-	public void setNewsletter(Boolean newsletter) {
+	public void setNewsletter(boolean newsletter) {
 		this.newsletter = newsletter;
 	}
 
@@ -180,8 +179,7 @@ public class Customer extends AbstractPersistable<Long> {
 				+ (this.firstName == null ? 0 : this.firstName.hashCode());
 		result = prime * result + (this.gender == null ? 0 : this.gender.hashCode());
 		result = prime * result + (this.lastName == null ? 0 : this.lastName.hashCode());
-		result = prime * result
-				+ (this.newsletter == null ? 0 : this.newsletter.hashCode());
+		result = prime * result + (this.newsletter ? 1231 : 1237);
 		result = prime * result + (this.zipCode == null ? 0 : this.zipCode.hashCode());
 		return result;
 	}
@@ -252,12 +250,7 @@ public class Customer extends AbstractPersistable<Long> {
 		else if (!this.lastName.equals(other.lastName)) {
 			return false;
 		}
-		if (this.newsletter == null) {
-			if (other.newsletter != null) {
-				return false;
-			}
-		}
-		else if (!this.newsletter.equals(other.newsletter)) {
+		if (this.newsletter != other.newsletter) {
 			return false;
 		}
 		if (this.zipCode == null) {

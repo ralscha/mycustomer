@@ -2,8 +2,8 @@ Ext.define('MyCustomer.view.main.MainModel', {
 	extend: 'Ext.app.ViewModel',
 
 	data: {
-		selectedCustomer: null,
-		editCustomer: false
+		currentCustomer: null,
+		nameFilter: null
 	},
 
 	stores: {
@@ -20,7 +20,14 @@ Ext.define('MyCustomer.view.main.MainModel', {
 			} ],
 			listeners: {
 				load: 'onStoreLoad'
-			}
+			},
+			filters: [ {
+				property: 'category',
+				value: '{categoryFilterCB.value}'
+			}, {
+				property: 'name',
+				value: '{nameFilter}'
+			} ],
 		},
 		categories: {
 			fields: [ 'value', 'name' ],
@@ -45,6 +52,23 @@ Ext.define('MyCustomer.view.main.MainModel', {
 				value: 'All',
 				operator: '!='
 			} ]
+		}
+	},
+
+	formulas: {
+		status: {
+			bind: {
+				bindTo: '{currentCustomer}',
+				deep: true
+			},
+			get: function(customer) {
+				var ret = {
+					dirty: customer ? customer.dirty : false,
+					valid: customer && customer.isModel ? customer.isValid() : false
+				};
+				ret.dirtyAndValid = ret.dirty && ret.valid;
+				return ret;
+			}
 		}
 	}
 });

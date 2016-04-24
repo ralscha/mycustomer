@@ -6,7 +6,7 @@ Ext.define('MyCustomer.view.customer.CustomerPanel', {
 	title: 'Customers',
 	bind: {
 		store: '{customers}',
-		selection: '{selectedCustomer}'
+		selection: '{currentCustomer}'
 	},
 
 	listeners: {
@@ -62,7 +62,7 @@ Ext.define('MyCustomer.view.customer.CustomerPanel', {
 			text: 'Delete',
 			handler: 'deleteCustomer',
 			bind: {
-				disabled: '{!selectedCustomer}'
+				disabled: '{!currentCustomer}'
 			}
 		}, '-', {
 			xtype: 'label',
@@ -72,23 +72,20 @@ Ext.define('MyCustomer.view.customer.CustomerPanel', {
 		}, '->', {
 			fieldLabel: 'Category',
 			xtype: 'combobox',
+			reference: 'categoryFilterCB',
+			publishes: 'value',
 			labelWidth: 60,
 			displayField: 'name',
 			valueField: 'value',
 			editable: false,
 			value: 'All',
 			bind: {
-				store: '{categories}',
-				selection: '{selectedCategory}'
-			},
-			listeners: {
-				change: 'onCategoryChange'
+				store: '{categories}'
 			}
 		}, {
 			fieldLabel: 'Name',
 			labelWidth: 40,
 			xtype: 'textfield',
-			bind: '{nameFilter}',
 			listeners: {
 				change: {
 					fn: 'onNameChange',
