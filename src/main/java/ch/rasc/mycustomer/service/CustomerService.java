@@ -21,9 +21,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import com.mysema.query.BooleanBuilder;
-import com.mysema.query.Tuple;
-import com.mysema.query.jpa.impl.JPAQuery;
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.Tuple;
+import com.querydsl.jpa.impl.JPAQuery;
 
 import ch.ralscha.extdirectspring.annotation.ExtDirectMethod;
 import ch.ralscha.extdirectspring.bean.ExtDirectStoreReadRequest;
@@ -152,9 +152,9 @@ public class CustomerService {
 	@ExtDirectMethod(STORE_READ)
 	public List<CategoryData> readCategoryData() {
 		BigDecimal totalCount = new BigDecimal(this.customerRepository.count());
-		List<Tuple> queryResult = new JPAQuery(this.entityManager)
-				.from(QCustomer.customer).groupBy(QCustomer.customer.category)
-				.list(QCustomer.customer.category, QCustomer.customer.category.count());
+		List<Tuple> queryResult = new JPAQuery<>(this.entityManager)
+				.select(QCustomer.customer.category, QCustomer.customer.category.count())
+				.from(QCustomer.customer).groupBy(QCustomer.customer.category).fetch();
 
 		List<CategoryData> result = new ArrayList<>();
 		for (Tuple tuple : queryResult) {

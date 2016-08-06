@@ -27,7 +27,7 @@ Ext.define('MyCustomer.view.main.MainModel', {
 			}, {
 				property: 'name',
 				value: '{nameFilter}'
-			} ],
+			} ]
 		},
 		categories: {
 			fields: [ 'value', 'name' ],

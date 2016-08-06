@@ -14,6 +14,7 @@ Ext.define('MyCustomer.Application', {
 		// </debug>
 
 		REMOTING_API.url = serverUrl + REMOTING_API.url;
+		REMOTING_API.maxRetries = 0;
 		Ext.direct.Manager.addProvider(REMOTING_API);
 
 		this.callParent(arguments);
