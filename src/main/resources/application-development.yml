@@ -1,6 +1,7 @@
 spring:
   resources:
-    cache-period: 
+    cache-period: 0
+    static-locations: file:./client/
   jpa:
     show-sql: true  
     
@@ -13,3 +14,4 @@ logging:
   level:
     org.springframework: INFO
     ch: INFO
+  file: 

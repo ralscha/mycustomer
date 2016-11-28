@@ -21,7 +21,6 @@ Ext.define('MyCustomer.Application', {
 	},
 
 	launch: function() {
-		Ext.fly('loading_container').destroy();
 	},
 
 	onAppUpdate: function() {

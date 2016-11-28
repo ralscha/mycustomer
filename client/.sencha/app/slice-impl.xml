@@ -182,6 +182,7 @@ Ext.Boot.loadSync([
             <![CDATA[
                 slicer-manifest
                     -exclude=${manifest.root.excludes}
+                    -jsonp=Ext.Microloader.setManifest
                     -removeBootstrapCssEntries=${remove.slicer.css.bootstrap.entries}
                     +ignoreDisabled
                     -basePath=${bootstrap.base.path}
@@ -198,16 +199,16 @@ Ext.Boot.loadSync([
     </target>
 
     <target name="-capture-theme-image">
-                <echo>Capture theme image to ${build.capture.png}</echo>
-                <x-sencha-command>
-                    <![CDATA[
+        <echo>Capture theme image to ${build.capture.png}</echo>
+        <x-sencha-command>
+            <![CDATA[
                         theme
                             capture
                                 -page=${app.example.theme.html}
                                 -image=${build.capture.png}
                                 -manifest=${build.capture.json}
                     ]]>
-                </x-sencha-command>
+        </x-sencha-command>
     </target>
 
     <target name="-capture-sass-page-image">
