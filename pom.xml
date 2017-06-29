@@ -14,14 +14,14 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.5.3.RELEASE</version>
+		<version>1.5.4.RELEASE</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
 	<properties>
 		<start-class>ch.rasc.mycustomer.Application</start-class>
 		<java.version>1.8</java.version>
-		<h2.version>1.4.195</h2.version>
+		<h2.version>1.4.196</h2.version>
 		<querydsl.version>4.1.4</querydsl.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.debug>true</maven.compiler.debug>
