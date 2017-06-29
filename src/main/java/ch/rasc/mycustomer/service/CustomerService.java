@@ -159,12 +159,17 @@ public class CustomerService {
 		List<CategoryData> result = new ArrayList<>();
 		for (Tuple tuple : queryResult) {
 			Category category = tuple.get(QCustomer.customer.category);
-			long categoryCount = tuple.get(QCustomer.customer.category.count());
+			if (category != null) {
+				Long categoryCount = tuple.get(QCustomer.customer.category.count());
+				if (categoryCount == null) {
+					categoryCount = 0L;
+				}
 
-			CategoryData cd = new CategoryData(category.name(),
-					new BigDecimal(categoryCount * 100).divide(totalCount, 2,
-							RoundingMode.HALF_UP));
-			result.add(cd);
+				CategoryData cd = new CategoryData(category.name(),
+						new BigDecimal(categoryCount * 100L).divide(totalCount, 2,
+								RoundingMode.HALF_UP));
+				result.add(cd);
+			}
 		}
 
 		return result;
