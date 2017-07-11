@@ -29,9 +29,7 @@ Ext.define('MyCustomer.view.customer.CategoryChartPanel', {
 			highlight: true,
 			tooltip: {
 				trackMouse: true,
-				renderer: function(tooltip, record, series) {
-					tooltip.setHtml(record.get('category') + ': ' + record.get('percent') + ' %');
-				}
+				renderer: (tooltip, record, series) => tooltip.setHtml(record.get('category') + ': ' + record.get('percent') + ' %')
 			}
 		} ]
 

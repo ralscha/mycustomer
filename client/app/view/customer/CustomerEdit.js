@@ -5,6 +5,7 @@ Ext.define('MyCustomer.view.customer.CustomerEdit', {
 	reference: 'customeredit',
 	defaultFocus: 'textfield[name=firstName]',
 
+	title: 'Edit',
 	bind: {
 		disabled: '{!currentCustomer}',
 		title: 'Edit: {currentCustomer.firstName} {currentCustomer.lastName}'
@@ -12,95 +13,108 @@ Ext.define('MyCustomer.view.customer.CustomerEdit', {
 
 	defaultType: 'textfield',
 	defaults: {
-		msgTarget: 'side',
+		labelAlign: 'left',
 		anchor: '100%'
 	},
 
 	modelValidation: true,
 
 	items: [ {
-		fieldLabel: 'First Name',
+		label: 'First Name',
 		name: 'firstName',
 		bind: '{currentCustomer.firstName}'
 	}, {
-		fieldLabel: 'Last Name',
+		label: 'Last Name',
 		name: 'lastName',
 		bind: '{currentCustomer.lastName}'
 	}, {
-		fieldLabel: 'E-Mail',
+		label: 'E-Mail',
 		name: 'email',
 		bind: '{currentCustomer.email}'
 	}, {
-		fieldLabel: 'Address',
+		label: 'Address',
 		name: 'address',
 		bind: '{currentCustomer.address}'
 	}, {
-		fieldLabel: 'City',
+		label: 'City',
 		name: 'city',
 		bind: '{currentCustomer.city}'
 	}, {
-		fieldLabel: 'Zip Code',
+		label: 'Zip Code',
 		name: 'zipCode',
 		bind: '{currentCustomer.zipCode}',
 		anchor: '50%'
 	}, {
-		fieldLabel: 'Category',
+		label: 'Category',
 		xtype: 'combobox',
 		name: 'category',
 		displayField: 'name',
 		valueField: 'value',
 		queryMode: 'local',
+		forceSelection: true,
+		editable: false,
 		bind: {
 			store: '{editCategories}',
 			value: '{currentCustomer.category}'
 		},
 		anchor: '50%'
 	}, {
-		xtype: 'radiogroup',
-		fieldLabel: 'Gender',
-		allowBlank: false,
-		viewModel: {
-			formulas: {
-				radioValue: {
-					bind: '{currentCustomer.gender}',
-					get: function(value) {
-						return {
-							gender: value
-						};
-					},
-					set: function(value) {
-						this.set('currentCustomer.gender', value.gender);
-					}
-				}
-			}
-		},
-		bind: {
-			value: '{radioValue}'
-		},
-		defaults: {
-			name: 'gender'
-		},
-		items: [ {
-			boxLabel: 'Male',
-			inputValue: 'M'
-		}, {
-			boxLabel: 'Female',
-			inputValue: 'F'
-		} ]
-	}, {
-		fieldLabel: 'Newsletter',
+        xtype: 'fieldset',
+        title: 'Gender',
+        defaults: {
+            xtype: 'radiofield',
+            labelWidth: '35%',
+            name: 'gender'
+        },
+        items: [{
+            value: 'M',
+            label: 'Male',
+        	viewModel: {
+    			formulas: {
+    				checked: {
+    					bind: '{currentCustomer.gender}',
+    					get: (value) => value === 'M',    				
+    					set: function(value) {
+    						this.set('currentCustomer.gender', value ? 'M' : 'F');
+    					}
+    				}
+    			}
+    		},
+    		bind: {
+    			checked: '{checked}'
+    		}
+        }, {
+        	value: 'F',
+        	label: 'Female',
+        	viewModel: {
+    			formulas: {
+    				checked: {
+    					bind: '{currentCustomer.gender}',
+    					get: (value) => value === 'F',    				
+    					set: function(value) {
+    						this.set('currentCustomer.gender', value ? 'F' : 'M');
+    					}
+    				}
+    			}
+    		},
+    		bind: {
+    			checked: '{checked}'
+    		}
+        }]
+    }, {
+		label: 'Newsletter',
 		xtype: 'checkboxfield',
 		bind: '{currentCustomer.newsletter}',
 		name: 'newsletter',
 		inputValue: 'true',
 		uncheckedValue: 'false'
 	}, {
-		fieldLabel: 'Date of Birth',
+		label: 'Date of Birth',
 		name: 'dob',
 		bind: '{currentCustomer.dob}',
 		xtype: 'datefield',
 		maxValue: new Date(),
-		format: 'Y-m-d',
+		dateFormat: 'Y-m-d',
 		anchor: '50%'
 	} ],
 

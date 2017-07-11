@@ -70,8 +70,8 @@ public class CustomerService {
 
 		BooleanBuilder bb = new BooleanBuilder();
 		if (StringUtils.hasText(name)) {
-			bb.and(QCustomer.customer.firstName.startsWith(name)
-					.or(QCustomer.customer.lastName.startsWith(name)));
+			bb.and(QCustomer.customer.firstName.containsIgnoreCase(name)
+					.or(QCustomer.customer.lastName.containsIgnoreCase(name)));
 		}
 		if (StringUtils.hasText(category) && !"All".equals(category)) {
 			bb.and(QCustomer.customer.category.eq(Category.valueOf(category)));

@@ -1,18 +1,18 @@
 Ext.define('MyCustomer.Application', {
 	extend: 'Ext.app.Application',
-	requires: [ 'MyCustomer.*', 'Ext.plugin.Viewport', 'Ext.direct.RemotingProvider', 'Ext.window.Toast' ],
+	requires: [ 'Ext.direct.*' ],
 	name: 'MyCustomer',
 
 	stores: [ 'CategoriesReport' ],
 
-	constructor: function() {
+    quickTips: false,
+    platformConfig: {
+        desktop: {
+            quickTips: true
+        }
+    },
 
-		// <debug>
-		Ext.Ajax.on('beforerequest', function(conn, options, eOpts) {
-			options.withCredentials = true;
-		}, this);
-		// </debug>
-
+	constructor() {
 		REMOTING_API.url = serverUrl + REMOTING_API.url;
 		REMOTING_API.maxRetries = 0;
 		Ext.direct.Manager.addProvider(REMOTING_API);
@@ -20,10 +20,7 @@ Ext.define('MyCustomer.Application', {
 		this.callParent(arguments);
 	},
 
-	launch: function() {
-	},
-
-	onAppUpdate: function() {
+	onAppUpdate() {
 		window.location.reload();
 	}
 });

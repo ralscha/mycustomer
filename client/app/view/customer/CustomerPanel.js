@@ -1,6 +1,7 @@
 Ext.define('MyCustomer.view.customer.CustomerPanel', {
-	extend: 'Ext.grid.Panel',
-
+	extend: 'Ext.grid.Grid',
+	requires: ['Ext.grid.plugin.PagingToolbar'],
+	
 	reference: 'customerGrid',
 
 	title: 'Customers',
@@ -9,10 +10,14 @@ Ext.define('MyCustomer.view.customer.CustomerPanel', {
 		selection: '{currentCustomer}'
 	},
 
+    plugins: [{
+        type: 'pagingtoolbar'
+    }],
+	
 	listeners: {
 		itemclick: 'onItemClick'
 	},
-
+	
 	columns: [ {
 		dataIndex: 'firstName',
 		text: 'First Name',
@@ -28,12 +33,7 @@ Ext.define('MyCustomer.view.customer.CustomerPanel', {
 	}, {
 		dataIndex: 'gender',
 		text: 'Gender',
-		renderer: function(value) {
-			if (value === 'M') {
-				return 'male';
-			}
-			return 'female';
-		}
+		renderer: (value) => value === 'M' ? 'male' : 'female'
 	}, {
 		dataIndex: 'zipCode',
 		text: 'ZIP'
@@ -52,9 +52,9 @@ Ext.define('MyCustomer.view.customer.CustomerPanel', {
 		falseText: ''
 	} ],
 
-	dockedItems: [ {
+	items: [ {
 		xtype: 'toolbar',
-		dock: 'top',
+		docked: 'top',
 		items: [ {
 			text: 'New',
 			handler: 'newCustomer'
@@ -64,17 +64,17 @@ Ext.define('MyCustomer.view.customer.CustomerPanel', {
 			bind: {
 				disabled: '{!currentCustomer}'
 			}
-		}, '-', {
-			xtype: 'label',
+		}, '->', {
+			xtype: 'component',
 			bind: {
-				text: 'Number of Customers: {numberOfCustomers}'
+				html: 'Number of Customers: {numberOfCustomers}'
 			}
 		}, '->', {
-			fieldLabel: 'Category',
+			label: 'Category',
 			xtype: 'combobox',
 			reference: 'categoryFilterCB',
 			publishes: 'value',
-			labelWidth: 60,
+			labelAlign: 'top',
 			displayField: 'name',
 			valueField: 'value',
 			editable: false,
@@ -83,8 +83,8 @@ Ext.define('MyCustomer.view.customer.CustomerPanel', {
 				store: '{categories}'
 			}
 		}, {
-			fieldLabel: 'Name',
-			labelWidth: 40,
+			label: 'Name',
+			labelAlign: 'top',
 			xtype: 'textfield',
 			listeners: {
 				change: {
@@ -92,21 +92,8 @@ Ext.define('MyCustomer.view.customer.CustomerPanel', {
 					buffer: 500
 				}
 			},
-			triggers: {
-				clear: {
-					cls: 'x-form-clear-trigger',
-					handler: function(tf) {
-						tf.setValue('');
-					}
-				}
-			}
+			clearable: true
 		} ]
-	}, {
-		xtype: 'pagingtoolbar',
-		dock: 'bottom',
-		bind: {
-			store: '{customers}'
-		}
 	} ]
 
 });

@@ -10,15 +10,13 @@ Ext.define('MyCustomer.view.main.Main', {
 	},
 
 	layout: {
-		type: 'border'
+		type: 'hbox'
 	},
 
 	items: [ {
-		region: 'center',
-		xclass: 'MyCustomer.view.customer.CustomerPanel'
+		xclass: 'MyCustomer.view.customer.CustomerPanel',
+		flex: 1
 	}, {
-		region: 'east',
-		split: true,
 		xtype: 'panel',
 		width: 500,
 		layout: {

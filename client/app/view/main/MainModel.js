@@ -61,8 +61,8 @@ Ext.define('MyCustomer.view.main.MainModel', {
 				bindTo: '{currentCustomer}',
 				deep: true
 			},
-			get: function(customer) {
-				var ret = {
+			get: (customer) => {
+				const ret = {
 					dirty: customer ? customer.dirty : false,
 					valid: customer && customer.isModel ? customer.isValid() : false
 				};
