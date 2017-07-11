@@ -66,9 +66,9 @@ Ext.define('MyCustomer.view.main.MainController', {
 			failure: (record, op) => {
 				const validations = op.getResponse().result.validations;
 				if (validations) {
-					const form = this.lookup('customeredit').getForm();
+					const form = this.lookup('customeredit');
 					validations.forEach((validation) => {
-						const field = form.findField(validation.field);
+						const field = form.getFields(validation.field);
 						field.markInvalid(validation.message);
 					});
 				}

@@ -18,4 +18,6 @@ public interface CustomerRepository
 
 	@Override
 	List<Customer> findAll(Predicate predicate);
+	
+	Customer findByEmail(String email);
 }

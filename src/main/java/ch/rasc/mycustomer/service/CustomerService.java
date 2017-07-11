@@ -88,6 +88,10 @@ public class CustomerService {
 		System.out.println(newCustomer);
 
 		List<ValidationErrors> violations = validateEntity(newCustomer);
+		ValidationErrors ve = isEmailUnique(newCustomer);
+		if (ve != null) {
+			violations.add(ve);
+		}		
 		ValidationErrorsResult<Customer> result;
 		if (violations.isEmpty()) {
 			Customer insertedCustomer = this.customerRepository.save(newCustomer);
@@ -105,6 +109,10 @@ public class CustomerService {
 	@ExtDirectMethod(STORE_MODIFY)
 	public ValidationErrorsResult<Customer> update(Customer updatedCustomer) {
 		List<ValidationErrors> violations = validateEntity(updatedCustomer);
+		ValidationErrors ve = isEmailUnique(updatedCustomer);
+		if (ve != null) {
+			violations.add(ve);
+		}
 		ValidationErrorsResult<Customer> result;
 		if (violations.isEmpty()) {
 			Customer savedCustomer = this.customerRepository.save(updatedCustomer);
@@ -117,6 +125,22 @@ public class CustomerService {
 		return result;
 	}
 
+	private ValidationErrors isEmailUnique(Customer customer) {
+		if (StringUtils.hasText(customer.getEmail())) {
+			Customer aCustomer = this.customerRepository.findByEmail(customer.getEmail());
+			if (aCustomer != null) {
+				if (customer.getId() == null || !aCustomer.getId().equals(customer.getId())) {
+					ValidationErrors error = new ValidationErrors();
+					error.setField("email");
+					error.setMessage(new String[] {"Email not unique"});
+					return error;
+				}
+			}
+		}
+
+		return null;
+	}
+	
 	protected <T> List<ValidationErrors> validateEntity(T entity) {
 		Set<ConstraintViolation<T>> constraintViolations = this.validator
 				.validate(entity);
