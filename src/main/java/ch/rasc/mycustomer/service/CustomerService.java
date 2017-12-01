@@ -69,11 +69,11 @@ public class CustomerService {
 		}
 
 		BooleanBuilder bb = new BooleanBuilder();
-		if (StringUtils.hasText(name)) {
+		if (name != null && StringUtils.hasText(name)) {
 			bb.and(QCustomer.customer.firstName.containsIgnoreCase(name)
 					.or(QCustomer.customer.lastName.containsIgnoreCase(name)));
 		}
-		if (StringUtils.hasText(category) && !"All".equals(category)) {
+		if (category != null && StringUtils.hasText(category) && !"All".equals(category)) {
 			bb.and(QCustomer.customer.category.eq(Category.valueOf(category)));
 		}
 
