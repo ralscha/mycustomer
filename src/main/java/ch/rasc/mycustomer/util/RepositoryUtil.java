@@ -32,11 +32,10 @@ public abstract class RepositoryUtil {
 		int page = Math.max(request.getPage() - 1, 0);
 
 		if (orders.isEmpty()) {
-			return new PageRequest(page, request.getLimit());
+			return PageRequest.of(page, request.getLimit());
 		}
 
-		Sort sort = new Sort(orders);
-		return new PageRequest(page, request.getLimit(), sort);
+		return PageRequest.of(page, request.getLimit(), Sort.by(orders));
 
 	}
 

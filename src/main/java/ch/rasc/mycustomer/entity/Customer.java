@@ -6,12 +6,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -29,8 +28,6 @@ import ch.rasc.extclassgenerator.ModelType;
 @JsonIgnoreProperties("new")
 @JsonInclude(Include.NON_NULL)
 public class Customer extends AbstractPersistable<Long> {
-
-	private static final long serialVersionUID = 1L;
 
 	@Length(min = 1, max = 255)
 	@NotEmpty

@@ -73,7 +73,8 @@ public class CustomerService {
 			bb.and(QCustomer.customer.firstName.containsIgnoreCase(name)
 					.or(QCustomer.customer.lastName.containsIgnoreCase(name)));
 		}
-		if (category != null && StringUtils.hasText(category) && !"All".equals(category)) {
+		if (category != null && StringUtils.hasText(category)
+				&& !"All".equals(category)) {
 			bb.and(QCustomer.customer.category.eq(Category.valueOf(category)));
 		}
 
@@ -91,7 +92,7 @@ public class CustomerService {
 		ValidationErrors ve = isEmailUnique(newCustomer);
 		if (ve != null) {
 			violations.add(ve);
-		}		
+		}
 		ValidationErrorsResult<Customer> result;
 		if (violations.isEmpty()) {
 			Customer insertedCustomer = this.customerRepository.save(newCustomer);
@@ -129,10 +130,11 @@ public class CustomerService {
 		if (StringUtils.hasText(customer.getEmail())) {
 			Customer aCustomer = this.customerRepository.findByEmail(customer.getEmail());
 			if (aCustomer != null) {
-				if (customer.getId() == null || !aCustomer.getId().equals(customer.getId())) {
+				if (customer.getId() == null
+						|| !aCustomer.getId().equals(customer.getId())) {
 					ValidationErrors error = new ValidationErrors();
 					error.setField("email");
-					error.setMessage(new String[] {"Email not unique"});
+					error.setMessage(new String[] { "Email not unique" });
 					return error;
 				}
 			}
@@ -140,7 +142,7 @@ public class CustomerService {
 
 		return null;
 	}
-	
+
 	protected <T> List<ValidationErrors> validateEntity(T entity) {
 		Set<ConstraintViolation<T>> constraintViolations = this.validator
 				.validate(entity);
