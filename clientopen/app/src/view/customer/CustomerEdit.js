@@ -1,5 +1,6 @@
 Ext.define('MyCustomer.view.customer.CustomerEdit', {
 	extend: 'Ext.form.Panel',
+	requires: ['Ext.field.ComboBox', 'Ext.form.FieldSet'],
 	bodyPadding: 5,
 	width: '100%',
 	reference: 'customeredit',

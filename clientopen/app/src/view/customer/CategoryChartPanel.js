@@ -1,6 +1,7 @@
 Ext.define('MyCustomer.view.customer.CategoryChartPanel', {
 	extend: 'Ext.panel.Panel',
-	requires: [ 'Ext.chart.series.Pie', 'Ext.chart.interactions.Rotate', 'Ext.chart.interactions.ItemHighlight', 'Ext.chart.theme.DefaultGradients' ],
+	requires: [ 'Ext.chart.series.Pie', 'Ext.chart.interactions.Rotate', 'Ext.chart.interactions.ItemHighlight', 'Ext.chart.theme.DefaultGradients',
+	'Ext.chart.PolarChart'],
 	title: 'Categories',
 	width: '100%',
 

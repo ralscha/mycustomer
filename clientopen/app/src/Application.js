@@ -1,16 +1,9 @@
 Ext.define('MyCustomer.Application', {
 	extend: 'Ext.app.Application',
-	requires: [ 'Ext.direct.*' ],
+	requires: [ 'MyCustomer.*', 'Ext.direct.*' ],
 	name: 'MyCustomer',
 
 	stores: [ 'CategoriesReport' ],
-
-    quickTips: false,
-    platformConfig: {
-        desktop: {
-            quickTips: true
-        }
-    },
 
 	constructor() {
 		REMOTING_API.url = serverUrl + REMOTING_API.url;
@@ -20,7 +13,22 @@ Ext.define('MyCustomer.Application', {
 		this.callParent(arguments);
 	},
 
+	removeSplash: function () {
+		Ext.getBody().removeCls('launching');
+		const elem = document.getElementById("splash");
+		elem.parentNode.removeChild(elem);
+	},
+
+	launch: function () {
+		this.removeSplash();
+		const whichView = 'MyCustomer.view.main.Main';
+		Ext.Viewport.add([{xclass: whichView}])
+	},
+
 	onAppUpdate() {
 		window.location.reload();
 	}
 });
+
+
+

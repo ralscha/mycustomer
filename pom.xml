@@ -103,7 +103,7 @@
 						</goals>
 						<configuration>
 							<processor>ch.rasc.extclassgenerator.ModelAnnotationProcessor</processor>
-							<outputDirectory>${project.basedir}/client/app</outputDirectory>
+							<outputDirectory>${project.basedir}/clientopen/app/src</outputDirectory>
 							<options>
 								<debug>true</debug>
 								<outputFormat>extjs5</outputFormat>
@@ -134,32 +134,16 @@
 				<version>1.6.0</version>
 				<executions>
 					<execution>
-						<id>sencha-app-clean-development</id>
-						<goals>
-							<goal>exec</goal>
-						</goals>
-						<phase>clean</phase>
-						<configuration>
-							<executable>sencha</executable>
-							<workingDirectory>${basedir}/client</workingDirectory>
-							<arguments>
-								<argument>app</argument>
-								<argument>clean</argument>
-								<argument>development</argument>
-							</arguments>
-						</configuration>
-					</execution>
-					<execution>
 						<id>sencha-app-clean</id>
 						<goals>
 							<goal>exec</goal>
 						</goals>
 						<phase>clean</phase>
 						<configuration>
-							<executable>sencha</executable>
-							<workingDirectory>${basedir}/client</workingDirectory>
+							<executable>npm</executable>
+							<workingDirectory>${basedir}/clientopen</workingDirectory>
 							<arguments>
-								<argument>app</argument>
+								<argument>run</argument>
 								<argument>clean</argument>
 							</arguments>
 						</configuration>
@@ -171,11 +155,11 @@
 						</goals>
 						<phase>prepare-package</phase>
 						<configuration>
-							<executable>sencha</executable>
-							<workingDirectory>${basedir}/client</workingDirectory>
+							<executable>npm</executable>
+							<workingDirectory>${basedir}/clientopen</workingDirectory>
 							<arguments>
-								<argument>app</argument>
-								<argument>build</argument>
+								<argument>run</argument>
+								<argument>build-desktop-production</argument>
 							</arguments>
 						</configuration>
 					</execution>
@@ -192,8 +176,7 @@
 
 								<copy todir="${basedir}/target/classes/static"
 									includeEmptyDirs="false">
-									<fileset dir="${basedir}/client/build/production/MyCustomer">
-										<exclude name="**/Readme.md" />
+									<fileset dir="${basedir}/clientopen/build/production/MyCustomer">
 									</fileset>
 								</copy>
 

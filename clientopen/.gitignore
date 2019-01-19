@@ -1,0 +1,6 @@
+/build
+/generatedFiles
+/cordova
+/node_modules
+/.idea/
+/package-lock.json

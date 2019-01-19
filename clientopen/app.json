@@ -1,0 +1,142 @@
+{
+  "name": "MyCustomer",
+  "namespace": "MyCustomer",
+  "version": "1.0.0.0",
+  "framework": "ext",
+  "template": "moderndesktop",
+  "indexHtmlPath": "index.html",
+  "requires": [
+    "font-awesome",
+    "charts"
+  ],
+  "builds": {
+    "desktop": {
+      "toolkit": "modern",
+      "theme": "theme-material",
+      "sass": {
+        "generated": {
+          "var": "modern/sass/save.scss",
+          "src": "modern/sass/save"
+        }
+      }
+    }
+  },
+  "classpath": [
+    "app/src"
+  ],
+  "overrides": [
+    "app/overrides"
+  ],
+  "sass": {
+    "namespace": "MyCustomer",
+    "etc": [
+      "sass/etc/all.scss"
+    ],
+    "var": [
+      "app/sass/var.scss"
+    ],
+    "src": [
+      "app/sass/src.scss"
+    ]
+  },
+  "resources": [
+    {
+      "path": "resources",
+      "output": "shared"
+    }
+  ],
+  "output": {
+    "base": "${workspace.build.dir}/${build.environment}/${app.name}",
+    "page": "index.html",
+    "manifest": "${app.name}.json",
+    "js": "app.js",
+    "appCache": {
+      "enable": false
+    },
+    "resources": {
+      "path": "resources",
+      "shared": "resources"
+    }
+  },
+  "fashion": {
+    "missingParameters": "error",
+    "inliner": {
+      "enable": false
+    }
+  },
+  "js": [
+    {
+      "path": "api.js",
+      "bundle": true
+    },
+    {
+      "path": "app.js",
+      "bundle": true
+    }
+  ],
+  "classic": {
+    "js": []
+  },
+  "modern": {
+    "js": []
+  },
+  "css": [
+    {
+      "path": "${build.out.css.path}",
+      "bundle": true,
+      "exclude": [
+        "fashion"
+      ]
+    }
+  ],
+  "loader": {
+    "cache": false,
+    "cacheParam": "_dc"
+  },
+  "production": {
+    "output": {
+      "appCache": {
+        "enable": false
+      }
+    },
+    "loader": {
+      "cache": "${build.timestamp}"
+    },
+    "cache": {
+      "enable": true
+    },
+    "compressor": {
+      "type": "yui"
+    }
+  },
+  "testing": {},
+  "development": {
+    "watch": {
+      "delay": 250
+    }
+  },
+  "bootstrap": {
+    "base": "generatedFiles",
+    "manifest": "generatedFiles/${app.name}.json",
+    "microloader": "bootstrap.js",
+    "css": "bootstrap.css"
+  },
+  "cache": {
+    "enable": false,
+    "deltas": "deltas"
+  },
+  "appCache": {
+    "cache": [
+      "index.html"
+    ],
+    "network": [
+      "*"
+    ],
+    "fallback": []
+  },
+  "archivePath": "archive",
+  "ignore": [
+    "(^|/)CVS(/?$|/.*?$)"
+  ],
+  "id": "db3b86df-9740-4503-8e2d-912d7558bb6e"
+}
