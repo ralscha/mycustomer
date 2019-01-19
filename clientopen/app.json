@@ -48,8 +48,8 @@
   "output": {
     "base": "${workspace.build.dir}/${build.environment}/${app.name}",
     "page": "index.html",
-    "manifest": "${app.name}.json",
-    "js": "app.js",
+    "manifest": "generatedFiles/${app.name}.json",
+    "js": "generatedFiles/app.js",
     "appCache": {
       "enable": false
     },
@@ -117,7 +117,7 @@
   },
   "bootstrap": {
     "base": "generatedFiles",
-    "manifest": "generatedFiles/${app.name}.json",
+    "manifest": "${app.name}.json",
     "microloader": "bootstrap.js",
     "css": "bootstrap.css"
   },
