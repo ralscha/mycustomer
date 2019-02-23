@@ -20,7 +20,7 @@
 	<properties>
 		<start-class>ch.rasc.mycustomer.Application</start-class>
 		<java.version>1.8</java.version>
-		<h2.version>1.4.197</h2.version>
+		<h2.version>1.4.198</h2.version>
 		<querydsl.version>4.2.1</querydsl.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.debug>true</maven.compiler.debug>
