@@ -14,21 +14,17 @@ Ext.define('MyCustomer.Application', {
 	},
 
 	removeSplash: function () {
-		Ext.getBody().removeCls('launching');
-		const elem = document.getElementById("splash");
-		elem.parentNode.removeChild(elem);
+		Ext.getBody().removeCls('launching')
+		var elem = document.getElementById("splash")
+		elem.parentNode.removeChild(elem)
 	},
 
 	launch: function () {
-		this.removeSplash();
-		const whichView = 'MyCustomer.view.main.Main';
-		Ext.Viewport.add([{xclass: whichView}])
+		this.removeSplash()
+		Ext.Viewport.add([{xclass: 'MyCustomer.view.main.Main'}])
 	},
 
 	onAppUpdate() {
 		window.location.reload();
 	}
 });
-
-
-

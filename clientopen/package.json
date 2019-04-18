@@ -4,11 +4,11 @@
   "scripts": {
     "clean": "rimraf build",
     "start": "cross-env-shell npm run dev",
-    "dev": "webpack-dev-server --env.verbose=no --env.environment=development",
-    "prod": "webpack-dev-server --env.verbose=no --env.environment=production",
-    "build": "cross-env-shell npm run clean && cross-env webpack --env.verbose=no --env.environment=production --env.browser=false --env.watch=no",
-    "desktop": "webpack-dev-server --env.profile=desktop --env.environment=development --env.verbose=no -w",
-    "desktop-v": "webpack-dev-server --env.profile=desktop --env.environment=development --env.verbose=yes",
+    "dev": "webpack-dev-server --env.environment=development",
+    "prod": "webpack-dev-server --env.environment=production --env.treeshake=true",
+    "build": "cross-env-shell npm run clean && cross-env webpack --env.environment=production --env.treeshake=true",
+    "desktop": "webpack-dev-server --env.profile=desktop --env.environment=development",
+    "desktop-v": "webpack-dev-server --env.profile=desktop --env.environment=development",
     "build-desktop-testing": "npx sencha app build desktop testing",
     "build-desktop-production": "npx sencha app build desktop production",
     "createview": "cross-env-shell npx sencha generate viewpackage $npm_package_extbuild_defaultprofile $VIEW"
@@ -19,18 +19,18 @@
     "defaultverbose": "no"
   },
   "dependencies": {
-    "@sencha/ext": "6.6.0",
-    "@sencha/ext-charts": "6.6.0",
-    "@sencha/ext-modern": "6.6.0",
-    "@sencha/ext-modern-theme-material": "6.6.0"
+    "@sencha/ext": "6.7.0",
+    "@sencha/ext-charts": "6.7.0",
+    "@sencha/ext-modern": "6.7.0",
+    "@sencha/ext-modern-theme-material": "6.7.0"
   },
   "devDependencies": {
     "@sencha/ext-webpack-plugin": "6.7.0",
     "html-webpack-plugin": "3.2.0",
+    "cross-env": "5.2.0",
     "portfinder": "1.0.20",
-    "webpack": "4.29.5",
-    "webpack-cli": "3.2.3",
-    "webpack-dev-server": "3.2.0",
-    "cross-env": "5.2.0"
+    "webpack": "4.30.0",
+    "webpack-cli": "3.3.0",
+    "webpack-dev-server": "3.3.1"
   }
 }
