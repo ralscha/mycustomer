@@ -1,105 +1,90 @@
-const ExtWebpackPlugin = require('@sencha/ext-webpack-plugin');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const webpack = require('webpack');
+const { BaseHrefWebpackPlugin } = require('base-href-webpack-plugin');
+const ExtWebpackPlugin = require('@sencha/ext-webpack-plugin');
 const portfinder = require('portfinder');
 
 module.exports = async function (env) {
-  var browserprofile
-  var watchprofile
-  var buildenvironment = env.environment || process.env.npm_package_extbuild_defaultenvironment
-  if (buildenvironment == 'production') {
-    browserprofile = false
-    watchprofile = 'no'
+  function get(it, val) {if(env == undefined) {return val} else if(env[it] == undefined) {return val} else {return env[it]}}
+
+  //******* */
+  var framework     = get('framework',     'extjs')
+  var contextFolder = get('contextFolder', './')
+  var entryFile     = get('entryFile',     './index.js')
+  var outputFolder  = get('outputFolder',  './')
+  const rules =[
+    //{ test: /.(js|jsx)$/, exclude: /node_modules/ }
+    { test: /.(js)$/, use: ['babel-loader'] }
+  ]
+  const resolve = {
   }
-  else {
-    if (env.browser == undefined) {env.browser = true}
-    browserprofile = JSON.parse(env.browser) || true
-    watchprofile = env.watch || 'yes'
-  }
-  const isProd = buildenvironment === 'production'
-  var buildprofile = env.profile || process.env.npm_package_extbuild_defaultprofile
-  var buildenvironment = env.environment || process.env.npm_package_extbuild_defaultenvironment
-  var buildverbose = env.verbose || process.env.npm_package_extbuild_defaultverbose
-  if (buildprofile == 'all') { buildprofile = '' }
-  if (env.treeshake == undefined) {env.treeshake = false}
-  var treeshake = env.treeshake ? JSON.parse(env.treeshake) : false
-  var basehref = env.basehref || '/'
-  var mode = isProd ? 'production': 'development'
-  
-  portfinder.basePort = (env && env.port) || 1962;
+  //******* */
+
+  var toolkit       = get('toolkit',       'modern')
+  var theme         = get('theme',         'theme-material')
+  var packages      = get('packages',      ['treegrid'])
+  var script        = get('script',        '')
+  var emit          = get('emit',          'yes')
+  var profile       = get('profile',       '')
+  var environment   = get('environment',   'development')
+  var treeshake     = get('treeshake',     'no')
+  var browser       = get('browser',       'yes')
+  var watch         = get('watch',         'yes')
+  var verbose       = get('verbose',       'no')
+  var basehref      = get('basehref',      '/')
+
+  const isProd = environment === 'production'
+  portfinder.basePort = (env && env.port) || 1962
   return portfinder.getPortPromise().then(port => {
-    const nodeEnv = env && env.prod ? 'production' : 'development'
-    const isProd = nodeEnv === 'production'
     const plugins = [
-      new HtmlWebpackPlugin({
-        template: 'index.html',
-        hash: true,
-        inject: "body"
-      }), 
+      new HtmlWebpackPlugin({ template: "index.html", hash: true, inject: "body" }),
+      new BaseHrefWebpackPlugin({ baseHref: basehref }),
       new ExtWebpackPlugin({
-        framework: 'extjs',
+        framework: framework,
+        toolkit: toolkit,
+        theme: theme,
+        packages: packages,
+        script: script,
+        emit: emit,
         port: port,
-        emit: true,
-        browser: browserprofile,
+        profile: profile, 
+        environment: environment,
         treeshake: treeshake,
-        watch: watchprofile,
-        profile: buildprofile,
-        environment: buildenvironment,
-        verbose: buildverbose
+        browser: browser,
+        watch: watch,
+        verbose: verbose
       })
     ]
-//    if (!isProd) {
-//      plugins.push(
-//        new webpack.HotModuleReplacementPlugin()
-//      )
-//    }
+
     return {
-      performance: { hints: false },
-      mode: mode,
-      devtool: (mode === 'development') ? 'inline-source-map' : false,
-      context: path.join(__dirname, './'),
-      entry: {
-        main: "./app.js"
-      },
+      mode: environment,
+      devtool: (environment === 'development') ? 'inline-source-map' : false,
+      context: path.join(__dirname, contextFolder),
+      entry: entryFile,
       output: {
-        path: path.resolve(__dirname, './'),
-        filename: '[name].js'
-      },
-      module: {
-        rules: [
-          {
-            test: /.js$/,
-            exclude: /node_modules/
-          }
-        ]
+        path: path.join(__dirname, outputFolder),
+        filename: "[name].js"
       },
       plugins: plugins,
+      module: {
+        rules: rules
+      },
+      resolve: resolve,
+      performance: { hints: false },
+      stats: 'none',
+      optimization: { noEmitOnErrors: true },
+      node: false,
       devServer: {
-        contentBase: './',
+        contentBase: outputFolder,
+        hot: !isProd,
         historyApiFallback: true,
         host: '0.0.0.0',
-        hot: false,
-        port,
+        port: port,
         disableHostCheck: false,
         compress: isProd,
-        inline: !isProd,
-        stats: {
-          entrypoints: false,
-          assets: false,
-          children: false,
-          chunks: false,
-          hash: false,
-          modules: false,
-          publicPath: false,
-          timings: false,
-          version: false,
-          warnings: false,
-          colors: {
-            green: '[32m'
-          }
-        }
+        inline:!isProd,
+        stats: 'none'
       }
     }
-  });
+  })
 }

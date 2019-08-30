@@ -68,7 +68,7 @@
   "js": [
     {
       "path": "api.js",
-      "bundle": true
+      "includeInBundle": true
     },  
     {"path": "app.js", "bundle": true}
   ],
@@ -123,7 +123,7 @@
   },
 
   "cache": {
-    "enable": false,
+      "enable": false,
       "deltas": "${build.id}/deltas"
   },
 
@@ -135,5 +135,5 @@
 
   "archivePath": "archive/${build.id}",
   "ignore": ["(^|/)CVS(/?$|/.*?$)"],
-  "id": "a87efd39-4e87-43d1-8454-df51e16bba6b"
+  "id": "a54665b1-20dd-4cc0-9c61-e3f91795fc06"
 }

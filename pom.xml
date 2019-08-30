@@ -162,7 +162,7 @@
 							<workingDirectory>${basedir}/clientopen</workingDirectory>
 							<arguments>
 								<argument>run</argument>
-								<argument>build-desktop-production</argument>
+								<argument>build:desktop</argument>
 							</arguments>
 						</configuration>
 					</execution>
