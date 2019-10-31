@@ -13,14 +13,14 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.1.8.RELEASE</version>
+		<version>2.2.0.RELEASE</version>
 		<relativePath />
 	</parent>
 
 	<properties>
 		<start-class>ch.rasc.mycustomer.Application</start-class>
 		<java.version>11</java.version>
-		<h2.version>1.4.199</h2.version>
+		<h2.version>1.4.200</h2.version>
 		<querydsl.version>4.2.1</querydsl.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.debug>true</maven.compiler.debug>
