@@ -1,6 +1,3 @@
-Online Demo: https://demo.rasc.ch/mycustomer/
-
-
 ## Prerequisites
   - ExtJS subscription
   - Install Java: https://jdk.java.net/
